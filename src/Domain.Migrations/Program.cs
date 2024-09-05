@@ -1,57 +1,17 @@
 using Aspire.Prototype.Domain;
 using Aspire.Prototype.Domain.Migrations;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-#pragma warning disable CA1852 // Seal internal types
-CreateHostBuilder(args).Build().Run();
-#pragma warning restore CA1852 // Seal internal types
+var builder = Host.CreateApplicationBuilder(args);
 
-static IHostBuilder CreateHostBuilder(string[] args)
-{
-    return Host.CreateDefaultBuilder(args)
-        .ConfigureAppConfiguration(builder =>
-        {
-            builder.AddJsonFile("appsettings.json");
-            builder.AddCommandLine(args); // must be last
-        })
-        .ConfigureServices(
-            (hostContext, services) =>
-            {
-                services.Configure<MigrationOptions>(hostContext.Configuration.GetSection("Migration"));
+builder.AddServiceDefaults();
+builder.Services.AddHostedService<MigrationService>();
 
-                services.AddLogging(
-                    builder =>
-                    {
-                        builder.AddConsole();
-                        builder.AddDebug();
-                    }
-                );
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing.AddSource(MigrationService.ActivitySourceName));
 
-                services.AddDbContext<ApplicationDbContext>(
-                    options =>
-                    {
-                        MigrationOptions migrationOptions = new();
-                        hostContext.Configuration.GetSection("Migration").Bind(migrationOptions);
+builder.AddSqlServerDbContext<ApplicationDbContext>("sqldb");
 
-                        options.UseSqlServer(
-                            migrationOptions.ConnectionString,
-                            options =>
-                            {
-                                options.MigrationsAssembly(typeof(MigrationService).Assembly.FullName);
-                                options.EnableRetryOnFailure();
-                                options.CommandTimeout(600);
-                            }
-                        );
-                    },
-                    ServiceLifetime.Singleton,
-                    ServiceLifetime.Singleton
-                );
-
-                services.AddHostedService<MigrationService>();
-            }
-        );
-}
+var host = builder.Build();
+host.Run();

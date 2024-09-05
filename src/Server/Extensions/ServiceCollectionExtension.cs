@@ -1,6 +1,5 @@
 using Aspire.Prototype.Domain;
 using Aspire.Prototype.Server;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
@@ -73,9 +72,9 @@ public static class ServiceCollectionExtension
 
     public static IServiceCollection AddStorage(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationDbContext>(
-            options => options.UseSqlServer(configuration.GetConnectionString("Database"),
-                sqlOptions => sqlOptions.EnableRetryOnFailure()));
+        // services.AddDbContext<ApplicationDbContext>(
+        //     options => options.UseSqlServer(configuration.GetConnectionString("Database"),
+        //         sqlOptions => sqlOptions.EnableRetryOnFailure()));
 
 
         return services;
