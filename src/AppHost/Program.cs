@@ -1,4 +1,4 @@
-using Test.Template.React.App.AppHost.CustomHostingModel;
+using Aspire.Prototype.AppHost.CustomHostingModel;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
@@ -15,7 +15,7 @@ var server = builder.AddProject<Projects.Test_Template_React_App_Server>("server
 builder.AddYarnApp("react", "../Client", "dev")
     .WithReference(server)
     .WithEnvironment("BROWSER", "none")
-    .WithExternalHttpEndpoints()    
+    .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
 
 builder.Build().Run();

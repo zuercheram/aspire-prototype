@@ -1,4 +1,4 @@
-using Test.Template.React.App.Shared.Authorization;
+using Aspire.Prototype.Shared.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Test.Template.React.App.Server.Controllers;
+namespace Aspire.Prototype.Server.Controllers;
 
 [ValidateAntiForgeryToken]
 [Route("api/[controller]")]

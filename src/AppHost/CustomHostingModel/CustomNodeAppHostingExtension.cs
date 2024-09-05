@@ -2,7 +2,7 @@ using Aspire.Hosting.ApplicationModel;
 using Aspire.Hosting.Utils;
 using Microsoft.Extensions.Hosting;
 
-namespace Test.Template.React.App.AppHost.CustomHostingModel;
+namespace Aspire.Prototype.AppHost.CustomHostingModel;
 public static class CustomNodeAppHostingExtension
 {
     public static IResourceBuilder<NodeAppResource> AddYarnApp(this IDistributedApplicationBuilder builder, string name, string workingDirectory, string scriptName = "dev", string[]? args = null)

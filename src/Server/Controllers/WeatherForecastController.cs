@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Test.Template.React.App.Server.Controllers;
+namespace Aspire.Prototype.Server.Controllers;
 
 [ApiController]
 [ValidateAntiForgeryToken]

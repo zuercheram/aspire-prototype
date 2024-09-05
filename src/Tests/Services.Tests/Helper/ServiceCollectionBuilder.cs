@@ -1,16 +1,16 @@
-using Test.Template.React.App.Domain;
+using Aspire.Prototype.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
-namespace Test.Template.React.App.Services.Tests.Helper;
+namespace Aspire.Prototype.Services.Tests.Helper;
 
 public static class ServiceCollectionBuilder
 {
     public static ServiceCollection BuildServiceCollection(ITestOutputHelper? testOutputHelper = null, bool useLocalDb = false,
-        string databaseName = "Test.Template.React.App-Test", bool logMicrosoftTraces = false)
+        string databaseName = "Aspire.Prototype-Test", bool logMicrosoftTraces = false)
     {
         var serviceCollection = new ServiceCollection();
 

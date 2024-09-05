@@ -60,4 +60,4 @@ jobs:
                 scriptType: pscore
                 scriptLocation: inlineScript
                 inlineScript: |
-                  & dotnet "Test.Template.React.App.Domain.Migrations.dll" --Migration:IsProduction=true --Migration:ConnectionString="$(ConnectionStrings--Database)"
+                  & dotnet "Aspire.Prototype.Domain.Migrations.dll" --Migration:IsProduction=true --Migration:ConnectionString="$(ConnectionStrings--Database)"

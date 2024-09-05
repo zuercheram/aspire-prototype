@@ -33,8 +33,8 @@ SqlLocalDB start MSSQLLocalDB
 1. Open `src\Client` in Visual Studio Code
 1. Open a `.tsx` file
 1. Allow usage of TypeScript workspace version or alternatively do the following
-    - Press `Ctrl + P` and enter `>Select TypeScript Version`
-    - Choose `Use Workspace Version`
+   - Press `Ctrl + P` and enter `>Select TypeScript Version`
+   - Choose `Use Workspace Version`
 1. Open a new terminal in Visual Studio Code
 1. Run `yarn set version berry`
 1. Run `yarn install`
@@ -72,7 +72,7 @@ How to set up the CI/CD pipelines for this project.
     - Tenant Id: [Tenant Id]
     - Service connection name: `[SOLUTION_NAME]-AzureConnection-DEV`
   - Click `Verify and save`
-- Adjust `webAppName` and `keyVaultName` in `Test.Template.React.App.yml` to match the names of the resources created by IaC
+- Adjust `webAppName` and `keyVaultName` in `Aspire.Prototype.yml` to match the names of the resources created by IaC
 - Run `yarn install` in `src/Client` to install the required packages for the client and commit the changes to the repository
 
 ## Create pipelines

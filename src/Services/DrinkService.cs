@@ -1,10 +1,10 @@
-using Test.Template.React.App.Domain;
-using Test.Template.React.App.Domain.Entities;
-using Test.Template.React.App.Shared;
+using Aspire.Prototype.Domain;
+using Aspire.Prototype.Domain.Entities;
+using Aspire.Prototype.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Test.Template.React.App.Services;
+namespace Aspire.Prototype.Services;
 
 public class DrinkService : IDrinkService
 {

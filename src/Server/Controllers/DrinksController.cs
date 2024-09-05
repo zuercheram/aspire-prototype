@@ -1,10 +1,10 @@
-using Test.Template.React.App.Services;
-using Test.Template.React.App.Shared;
+using Aspire.Prototype.Services;
+using Aspire.Prototype.Shared;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Test.Template.React.App.Server.Controllers;
+namespace Aspire.Prototype.Server.Controllers;
 
 [ValidateAntiForgeryToken]
 [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]

@@ -1,4 +1,4 @@
-namespace Test.Template.React.App.Server;
+namespace Aspire.Prototype.Server;
 
 public static class SecurityHeadersDefinitions
 {

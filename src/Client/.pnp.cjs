@@ -12,14 +12,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     ],\
     "dependencyTreeRoots": [\
       {\
-        "name": "test.template.react.app",\
+        "name": "Aspire.Prototype",\
         "reference": "workspace:."\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
-      ["test.template.react.app", ["workspace:."]]\
+      ["Aspire.Prototype", ["workspace:."]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -11359,11 +11359,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["test.template.react.app", [\
+      ["Aspire.Prototype", [\
         ["workspace:.", {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["test.template.react.app", "workspace:."],\
+            ["Aspire.Prototype", "workspace:."],\
             ["@emotion/cache", "npm:11.13.1"],\
             ["@emotion/react", "virtual:b2798100e72e0c898d2faf30be3b0821ea7aa981dbdcc85a4a31b0581ae112896b35124931caba28ee5e967a1dbbc27101d141bb3dcd40de5754e3ad8fc5136c#npm:11.13.3"],\
             ["@emotion/styled", "virtual:b2798100e72e0c898d2faf30be3b0821ea7aa981dbdcc85a4a31b0581ae112896b35124931caba28ee5e967a1dbbc27101d141bb3dcd40de5754e3ad8fc5136c#npm:11.13.0"],\

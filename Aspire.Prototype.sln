@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Template.React.App.Server", "src\Server\Test.Template.React.App.Server.csproj", "{07D14B6A-51B9-4290-9608-3E30720E48E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Prototype.Server", "src\Server\Aspire.Prototype.Server.csproj", "{07D14B6A-51B9-4290-9608-3E30720E48E0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Template.React.App.Shared", "src\Shared\Test.Template.React.App.Shared.csproj", "{989F7449-05EE-4754-879A-3D30DECC4139}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Prototype.Shared", "src\Shared\Aspire.Prototype.Shared.csproj", "{989F7449-05EE-4754-879A-3D30DECC4139}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Template.React.App.Services", "src\Services\Test.Template.React.App.Services.csproj", "{4FBEC523-1F64-47D9-B6BC-E209814676A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Prototype.Services", "src\Services\Aspire.Prototype.Services.csproj", "{4FBEC523-1F64-47D9-B6BC-E209814676A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Template.React.App.Services.Tests", "src\Tests\Services.Tests\Test.Template.React.App.Services.Tests.csproj", "{D28326BF-F12C-494D-954B-A8E72D451501}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Prototype.Services.Tests", "src\Tests\Services.Tests\Aspire.Prototype.Services.Tests.csproj", "{D28326BF-F12C-494D-954B-A8E72D451501}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{FA3FBB55-49CD-438E-9373-70AE9F2FECD5}"
 EndProject
@@ -17,13 +17,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{5ADFC2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{32EB43C9-7ADA-40F5-9375-B93FBDA18150}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Template.React.App.Domain", "src\Domain\Test.Template.React.App.Domain.csproj", "{5CD1A979-83FB-49CC-86B4-ABA910DBC0C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Prototype.Domain", "src\Domain\Aspire.Prototype.Domain.csproj", "{5CD1A979-83FB-49CC-86B4-ABA910DBC0C1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Template.React.App.Domain.Migrations", "src\Domain.Migrations\Test.Template.React.App.Domain.Migrations.csproj", "{A5FFC679-BAB6-442F-A1C6-F848A95B9A97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Prototype.Domain.Migrations", "src\Domain.Migrations\Aspire.Prototype.Domain.Migrations.csproj", "{A5FFC679-BAB6-442F-A1C6-F848A95B9A97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Template.React.App.ServiceDefaults", "src\ServiceDefaults\Test.Template.React.App.ServiceDefaults.csproj", "{BAF03C23-69E5-4CF0-B111-B3D471B6FCAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire.Prototype.ServiceDefaults", "src\ServiceDefaults\Aspire.Prototype.ServiceDefaults.csproj", "{BAF03C23-69E5-4CF0-B111-B3D471B6FCAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Template.React.App.AppHost", "src\AppHost\Test.Template.React.App.AppHost.csproj", "{1A24F9EB-EFF4-4C48-AF82-026335D949B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire.Prototype.AppHost", "src\AppHost\Aspire.Prototype.AppHost.csproj", "{1A24F9EB-EFF4-4C48-AF82-026335D949B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

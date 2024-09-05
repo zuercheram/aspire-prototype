@@ -1,6 +1,6 @@
 using Microsoft.Net.Http.Headers;
 
-namespace Test.Template.React.App.Server.Extensions;
+namespace Aspire.Prototype.Server.Extensions;
 
 public static class ApplicationBuilderExtensions
 {

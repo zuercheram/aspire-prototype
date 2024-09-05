@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Test.Template.React.App.Server": {
+    "Aspire.Prototype.Server": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

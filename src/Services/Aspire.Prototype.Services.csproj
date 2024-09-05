@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Test.Template.React.App.Domain.csproj" />
-    <ProjectReference Include="..\Shared\Test.Template.React.App.Shared.csproj" />
+    <ProjectReference Include="..\Domain\Aspire.Prototype.Domain.csproj" />
+    <ProjectReference Include="..\Shared\Aspire.Prototype.Shared.csproj" />
   </ItemGroup>
 
 </Project>

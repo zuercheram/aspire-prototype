@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Test.Template.React.App.Shared.Authorization;
+namespace Aspire.Prototype.Shared.Authorization;
 
 public class UserInfo
 {

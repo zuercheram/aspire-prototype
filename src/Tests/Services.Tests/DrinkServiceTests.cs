@@ -1,10 +1,10 @@
-using Test.Template.React.App.Domain.Entities;
-using Test.Template.React.App.Services.Tests.Helper;
-using Test.Template.React.App.Shared;
+using Aspire.Prototype.Domain.Entities;
+using Aspire.Prototype.Services.Tests.Helper;
+using Aspire.Prototype.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 
-namespace Test.Template.React.App.Services.Tests;
+namespace Aspire.Prototype.Services.Tests;
 
 public class DrinkServiceTests
 {

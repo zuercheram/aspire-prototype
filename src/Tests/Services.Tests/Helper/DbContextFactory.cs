@@ -1,8 +1,8 @@
-using Test.Template.React.App.Domain;
+using Aspire.Prototype.Domain;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
-namespace Test.Template.React.App.Services.Tests.Helper;
+namespace Aspire.Prototype.Services.Tests.Helper;
 
 public static class DbContextFactory
 {
@@ -23,7 +23,7 @@ public static class DbContextFactory
         return applicationDbContext;
     }
 
-    public static ApplicationDbContext CreateApplicationDbContextInMemory(string databaseName = "Test.Template.React.App-Test", bool createNewDatabase = true)
+    public static ApplicationDbContext CreateApplicationDbContextInMemory(string databaseName = "Aspire.Prototype-Test", bool createNewDatabase = true)
     {
         var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
         builder.UseTestInMemoryDb(databaseName);
@@ -39,7 +39,7 @@ public static class DbContextFactory
         return applicationDbContext;
     }
 
-    public static ApplicationDbContext CreateApplicationDbContextLocalDb(string databaseName = "Test.Template.React.App-Test", bool createNewDatabase = true)
+    public static ApplicationDbContext CreateApplicationDbContextLocalDb(string databaseName = "Aspire.Prototype-Test", bool createNewDatabase = true)
     {
         var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
         builder.UseTestLocalDb(databaseName);
@@ -55,19 +55,19 @@ public static class DbContextFactory
         return applicationDbContext;
     }
 
-    public static void UseTestSqliteInMemoryDb(this DbContextOptionsBuilder builder, string databaseName = "Test.Template.React.App-Test")
+    public static void UseTestSqliteInMemoryDb(this DbContextOptionsBuilder builder, string databaseName = "Aspire.Prototype-Test")
     {
         var keepAliveConnection = new SqliteConnection($"DataSource={databaseName};mode=memory;cache=shared");
         keepAliveConnection.Open();
         builder.UseSqlite(keepAliveConnection);
     }
 
-    public static void UseTestInMemoryDb(this DbContextOptionsBuilder builder, string databaseName = "Test.Template.React.App-Test")
+    public static void UseTestInMemoryDb(this DbContextOptionsBuilder builder, string databaseName = "Aspire.Prototype-Test")
     {
         builder.UseInMemoryDatabase(databaseName);
     }
 
-    public static void UseTestLocalDb(this DbContextOptionsBuilder builder, string databaseName = "Test.Template.React.App-Test")
+    public static void UseTestLocalDb(this DbContextOptionsBuilder builder, string databaseName = "Aspire.Prototype-Test")
     {
         builder
             .UseSqlServer(

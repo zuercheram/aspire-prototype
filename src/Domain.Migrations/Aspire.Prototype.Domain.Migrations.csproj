@@ -18,7 +18,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="8.1.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Test.Template.React.App.Domain.csproj" />
+    <ProjectReference Include="..\Domain\Aspire.Prototype.Domain.csproj" />
   </ItemGroup>
 
 </Project>

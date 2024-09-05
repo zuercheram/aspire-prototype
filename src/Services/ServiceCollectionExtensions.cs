@@ -1,4 +1,4 @@
-using Test.Template.React.App.Services;
+using Aspire.Prototype.Services;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;

@@ -8813,7 +8813,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"test.template.react.app@workspace:.":
+"Aspire.Prototype@workspace:.":
   version: 0.0.0-use.local
   resolution: "test.template.react.app@workspace:."
   dependencies:

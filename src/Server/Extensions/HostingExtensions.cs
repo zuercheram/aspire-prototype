@@ -1,8 +1,8 @@
-using Test.Template.React.App.Server.Extensions;
+using Aspire.Prototype.Server.Extensions;
 using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using Serilog;
 
-namespace Test.Template.React.App.Server.Extensions;
+namespace Aspire.Prototype.Server.Extensions;
 
 internal static class HostingExtensions
 {
@@ -27,7 +27,7 @@ internal static class HostingExtensions
         }
         return builder.Build();
     }
-    
+
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         // Add if you require debugging in dev

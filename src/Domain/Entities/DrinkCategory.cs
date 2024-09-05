@@ -1,4 +1,4 @@
-namespace Test.Template.React.App.Domain.Entities;
+namespace Aspire.Prototype.Domain.Entities;
 
 public enum DrinkCategory
 {

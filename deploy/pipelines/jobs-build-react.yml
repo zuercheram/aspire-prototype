@@ -8,7 +8,7 @@ parameters:
 
 jobs:
   - job: BuildReact
-    displayName: Build Test.Template.React.App Client
+    displayName: Build Aspire.Prototype Client
     steps:
       - task: NodeTool@0
         inputs:

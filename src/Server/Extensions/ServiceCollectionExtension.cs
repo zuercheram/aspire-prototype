@@ -1,5 +1,5 @@
-using Test.Template.React.App.Domain;
-using Test.Template.React.App.Server;
+using Aspire.Prototype.Domain;
+using Aspire.Prototype.Server;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -90,8 +90,8 @@ public static class ServiceCollectionExtension
                 new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Test.Template.React.App API",
-                    Description = "Test.Template.React.App Description",
+                    Title = "Aspire.Prototype API",
+                    Description = "Aspire.Prototype Description",
                     TermsOfService = new Uri(configuration["TermsOfServiceUrl"] ?? string.Empty)
                 });
         });

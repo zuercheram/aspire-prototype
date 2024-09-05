@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 
-namespace Test.Template.React.App.Server;
+namespace Aspire.Prototype.Server;
 
 public class SwaggerCspRelaxingHeaderService : CustomHeaderService
 {
@@ -26,7 +26,7 @@ public class SwaggerCspRelaxingHeaderService : CustomHeaderService
         {
             policiesToUse = SecurityHeadersDefinitions.GetHeaderPolicyCollection(_hostEnvironment.IsDevelopment(), _configuration.GetValue<string>("AzureAd:Instance"), true);
         }
-        
+
         return base.EvaluatePolicy(context,policiesToUse);
     }
 }

@@ -44,4 +44,4 @@ jobs:
           commandOptions: -var-file="./vars/${{parameters.backendName}}.${{parameters.environmentCode}}.tfvars"
           environmentServiceName: ${{parameters.azureSubscription}}
           workingDirectory: "$(System.DefaultWorkingDirectory)/deploy/iac"
-          publishPlanResults: "Test.Template.React.App-iac-plan"
+          publishPlanResults: "Aspire.Prototype-iac-plan"

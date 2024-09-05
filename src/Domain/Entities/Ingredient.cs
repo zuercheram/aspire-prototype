@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Test.Template.React.App.Domain.Entities;
+namespace Aspire.Prototype.Domain.Entities;
 
 public class Ingredient : EntityTrackingBase
 {

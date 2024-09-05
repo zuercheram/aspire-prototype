@@ -1,5 +1,5 @@
 using Azure.Identity;
-using Test.Template.React.App.Server.Extensions;
+using Aspire.Prototype.Server.Extensions;
 using Serilog;
 
 #pragma warning disable CA1305

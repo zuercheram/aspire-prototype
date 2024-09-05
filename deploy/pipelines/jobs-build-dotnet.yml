@@ -20,7 +20,7 @@ parameters:
 
 jobs:
   - job: BuildDotNet
-    displayName: Build Test.Template.React.App Server
+    displayName: Build Aspire.Prototype Server
     steps:
       - task: UseDotNet@2
         displayName: Get DotNet SDK
@@ -28,19 +28,19 @@ jobs:
           packageType: sdk
           useGlobalJson: true
       - task: DotNetCoreCLI@2
-        displayName: Build Test.Template.React.App App
+        displayName: Build Aspire.Prototype App
         inputs:
           command: build
           projects: ${{parameters.buildProjects}}
           arguments: "--configuration ${{parameters.buildConfiguration}}"
       - task: DotNetCoreCLI@2
-        displayName: Test Test.Template.React.App App
+        displayName: Test Aspire.Prototype App
         inputs:
           command: test
           projects: ${{parameters.testProjects}}
           arguments: '--configuration ${{parameters.buildConfiguration}} --collect "Code coverage"'
       - task: DotNetCoreCLI@2
-        displayName: Publish Test.Template.React.App App
+        displayName: Publish Aspire.Prototype App
         inputs:
           command: publish
           projects: ${{parameters.publishProjects}}
@@ -51,7 +51,7 @@ jobs:
         displayName: Artifacts - Publish ${{ parameters.artifactName }}
         artifact: ${{ parameters.artifactName }}
       - task: DotNetCoreCLI@2
-        displayName: Publish Test.Template.React.App Migrations
+        displayName: Publish Aspire.Prototype Migrations
         inputs:
           command: publish
           projects: ${{parameters.publishProjectsMigrations}}

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Test.Template.React.App.Domain.Migrations.Migrations
+namespace Aspire.Prototype.Domain.Migrations.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

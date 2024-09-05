@@ -1,7 +1,7 @@
-using Test.Template.React.App.Domain.Entities;
+using Aspire.Prototype.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Test.Template.React.App.Domain;
+namespace Aspire.Prototype.Domain;
 
 internal static class ModelBuilderExtensions
 {

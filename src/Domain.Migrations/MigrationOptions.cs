@@ -1,4 +1,4 @@
-namespace Test.Template.React.App.Domain.Migrations;
+namespace Aspire.Prototype.Domain.Migrations;
 
 public class MigrationOptions
 {

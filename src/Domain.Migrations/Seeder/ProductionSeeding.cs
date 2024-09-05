@@ -1,4 +1,4 @@
-namespace Test.Template.React.App.Domain.Migrations.Seeder;
+namespace Aspire.Prototype.Domain.Migrations.Seeder;
 
 internal static class ProductionSeeding
 {

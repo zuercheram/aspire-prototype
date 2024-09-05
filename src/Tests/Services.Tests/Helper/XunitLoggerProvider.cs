@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
-namespace Test.Template.React.App.Services.Tests.Helper;
+namespace Aspire.Prototype.Services.Tests.Helper;
 
 public class XunitLoggerProvider : ILoggerProvider
 {

@@ -1,4 +1,4 @@
-namespace Test.Template.React.App.Server.Extensions;
+namespace Aspire.Prototype.Server.Extensions;
 
 public static class EndpointRouteBuilderExtensions
 {

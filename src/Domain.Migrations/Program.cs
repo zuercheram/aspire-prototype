@@ -1,5 +1,5 @@
-using Test.Template.React.App.Domain;
-using Test.Template.React.App.Domain.Migrations;
+using Aspire.Prototype.Domain;
+using Aspire.Prototype.Domain.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

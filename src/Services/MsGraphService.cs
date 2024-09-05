@@ -3,7 +3,7 @@ using Microsoft.Graph.Models;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Test.Template.React.App.Services;
+namespace Aspire.Prototype.Services;
 
 public class MsGraphService
 {

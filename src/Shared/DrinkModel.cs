@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Test.Template.React.App.Shared;
+namespace Aspire.Prototype.Shared;
 
 public class DrinkModel
 {

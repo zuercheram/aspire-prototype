@@ -1,4 +1,4 @@
-name: Test.Template.React.App IaC Pipeline
+name: Aspire.Prototype IaC Pipeline
 trigger:
   branches:
     include:
@@ -22,7 +22,7 @@ stages:
     jobs:
       - template: jobs-iac-plan.yml
         parameters:
-          azureSubscription: Test.Template.React.App-AzureConnection-DEV
+          azureSubscription: Aspire.Prototype-AzureConnection-DEV
           backendName: dev
           environmentCode: d1
   - stage: DeployIaCDev
@@ -32,7 +32,7 @@ stages:
     jobs:
       - template: jobs-iac-deploy.yml
         parameters:
-          azureSubscription: Test.Template.React.App-AzureConnection-DEV
+          azureSubscription: Aspire.Prototype-AzureConnection-DEV
           backendName: dev
           environmentCode: d1
           environment: Development-IaC
@@ -43,7 +43,7 @@ stages:
   #   jobs:
   #     - template: jobs-iac-plan.yml
   #       parameters:
-  #         azureSubscription: Test.Template.React.App-AzureConnection-TEST
+  #         azureSubscription: Aspire.Prototype-AzureConnection-TEST
   #         backendName: test
   #         environmentCode: t1
   # - stage: DeployIaCTest
@@ -53,7 +53,7 @@ stages:
   #   jobs:
   #     - template: jobs-iac-deploy.yml
   #       parameters:
-  #         azureSubscription: Test.Template.React.App-AzureConnection-TEST
+  #         azureSubscription: Aspire.Prototype-AzureConnection-TEST
   #         backendName: test
   #         environmentCode: t1
   #         environment: Test-IaC
@@ -64,7 +64,7 @@ stages:
   #   jobs:
   #     - template: jobs-iac-plan.yml
   #       parameters:
-  #         azureSubscription: Test.Template.React.App-AzureConnection-PROD
+  #         azureSubscription: Aspire.Prototype-AzureConnection-PROD
   #         backendName: prod
   #         environmentCode: p1
   # - stage: DeployIaCProd
@@ -74,7 +74,7 @@ stages:
   #   jobs:
   #     - template: jobs-iac-deploy.yml
   #       parameters:
-  #         azureSubscription: Test.Template.React.App-AzureConnection-PROD
+  #         azureSubscription: Aspire.Prototype-AzureConnection-PROD
   #         backendName: prod
   #         environmentCode: p1
   #         environment: Production-IaC

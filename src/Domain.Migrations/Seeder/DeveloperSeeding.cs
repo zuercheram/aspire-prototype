@@ -1,8 +1,8 @@
 using System.Text.Json;
-using Test.Template.React.App.Domain.Entities;
+using Aspire.Prototype.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Test.Template.React.App.Domain.Migrations.Seeder;
+namespace Aspire.Prototype.Domain.Migrations.Seeder;
 
 internal static class DeveloperSeeding
 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Test.Template.React.App.Domain;
+namespace Aspire.Prototype.Domain;
 
 internal static class UserContextHelper
 {

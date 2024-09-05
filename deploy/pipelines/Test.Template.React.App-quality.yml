@@ -1,4 +1,4 @@
-name: Test.Template.React.App Quality
+name: Aspire.Prototype Quality
 trigger:
   branches:
     include:

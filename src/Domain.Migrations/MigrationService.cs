@@ -1,11 +1,11 @@
-using Test.Template.React.App.Domain.Migrations.Seeder;
+using Aspire.Prototype.Domain.Migrations.Seeder;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Test.Template.React.App.Domain.Migrations;
+namespace Aspire.Prototype.Domain.Migrations;
 
 public class MigrationService : IHostedService
 {

@@ -14,7 +14,7 @@ parameters:
 
 jobs:
   - job: Build
-    displayName: Quality Build Test.Template.React.App
+    displayName: Quality Build Aspire.Prototype
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -30,20 +30,20 @@ jobs:
       #   inputs:
       #     SonarCloud: "shared-sonarcloud-service-connection-AZ_DEVOPS_PROJECT_NAME"
       #     organization: isolutionsag
-      #     projectKey: Test.Template.React.App
+      #     projectKey: Aspire.Prototype
       #     extraProperties: |
       #       scm.provider=git
       #       sonar.typescript.tsconfigPaths=src/Client/tsconfig.json
       #       sonar.projectBaseDir=/home/vsts/work/1/s/
       #       sonar.exclusions=**/bin/**,**/obj/**,**/*.dll,**/.yarn/**,**/node_modules/**,**/.pnp*
       - task: DotNetCoreCLI@2
-        displayName: Build Test.Template.React.App App
+        displayName: Build Aspire.Prototype App
         inputs:
           command: build
           projects: ${{parameters.dotNetBuildProjects}}
           arguments: "--configuration ${{parameters.buildConfiguration}}"
       - task: DotNetCoreCLI@2
-        displayName: Test Test.Template.React.App App
+        displayName: Test Aspire.Prototype App
         inputs:
           command: test
           projects: ${{parameters.dotNetTestProjects}}

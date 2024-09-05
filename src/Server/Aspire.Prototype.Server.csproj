@@ -37,10 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ServiceDefaults\Test.Template.React.App.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\Domain\Test.Template.React.App.Domain.csproj" />
-    <ProjectReference Include="..\Services\Test.Template.React.App.Services.csproj" />
-    <ProjectReference Include="..\Shared\Test.Template.React.App.Shared.csproj" />
+    <ProjectReference Include="..\ServiceDefaults\Aspire.Prototype.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\Domain\Aspire.Prototype.Domain.csproj" />
+    <ProjectReference Include="..\Services\Aspire.Prototype.Services.csproj" />
+    <ProjectReference Include="..\Shared\Aspire.Prototype.Shared.csproj" />
   </ItemGroup>
 
 </Project>

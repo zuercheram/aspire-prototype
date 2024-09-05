@@ -1,6 +1,6 @@
-using Test.Template.React.App.Shared;
+using Aspire.Prototype.Shared;
 
-namespace Test.Template.React.App.Services;
+namespace Aspire.Prototype.Services;
 
 public interface IDrinkService
 {
