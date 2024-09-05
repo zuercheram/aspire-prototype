@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Aspire.Microsoft.EntityFrameworkCore.SqlServer;
 
 #pragma warning disable CA1852 // Seal internal types
 CreateHostBuilder(args).Build().Run();
@@ -31,8 +30,6 @@ static IHostBuilder CreateHostBuilder(string[] args)
                         builder.AddDebug();
                     }
                 );
-
-                services.AddSqlServerDbContext<ApplicationDbContext>();
 
                 services.AddDbContext<ApplicationDbContext>(
                     options =>
