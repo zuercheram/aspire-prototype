@@ -1,0 +1,53 @@
+parameters:
+  - name: "clientPath"
+    type: string
+    default: "src/Client"
+  - name: "artifactName"
+    type: string
+    default: "Client"
+
+jobs:
+  - job: BuildReact
+    displayName: Build Test.Template.React.App Client
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "18.17.x"
+      - task: Bash@3
+        displayName: Yarn - Install
+        inputs:
+          targetType: inline
+          workingDirectory: ${{parameters.clientPath}}
+          script: |
+            yarn set version 3.6.1
+      - task: Bash@3
+        displayName: Yarn - Install NPM packages
+        inputs:
+          targetType: inline
+          workingDirectory: ${{parameters.clientPath}}
+          script: |
+            yarn install --immutable
+      - task: Bash@3
+        displayName: Yarn - Run jest
+        inputs:
+          targetType: inline
+          workingDirectory: ${{parameters.clientPath}}
+          script: |
+            yarn test-ci
+      - task: Bash@3
+        displayName: Yarn - Run eslint
+        inputs:
+          targetType: inline
+          workingDirectory: ${{parameters.clientPath}}
+          script: |
+            yarn eslint
+      - task: Bash@3
+        displayName: Yarn - Build React App
+        inputs:
+          targetType: inline
+          workingDirectory: ${{parameters.clientPath}}
+          script: |
+            yarn build
+      - publish: $(Build.SourcesDirectory)/src/Server/wwwroot
+        displayName: Artifacts - Publish ${{ parameters.artifactName }}
+        artifact: ${{ parameters.artifactName }}

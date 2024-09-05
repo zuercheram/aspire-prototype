@@ -1,0 +1,23 @@
+name: Test.Template.React.App Quality
+trigger:
+  branches:
+    include:
+      - dev
+      - main
+  paths:
+    include:
+      - src
+      - deploy
+variables:
+  YARN_CACHE_FOLDER: "$(Pipeline.Workspace)/.yarn"
+  CI: true
+stages:
+  - stage: Quality
+    displayName: Quality Build
+    pool:
+      vmImage: ubuntu-latest
+    jobs:
+      - template: jobs-build-quality.yml
+        parameters:
+          dotNetBuildProjects: "**/*.sln"
+          dotNetTestProjects: "**/*.sln"

@@ -1,0 +1,95 @@
+name: Test.Template.React.App
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+      - dev
+  paths:
+    include:
+      - src
+      - deploy
+
+variables:
+  isMainBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+  isDevBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/dev')]
+  isTargetMainBranch: $[eq(variables['system.pullRequest.targetBranch'], 'refs/heads/main')]
+  isReleasePR: $[startsWith(variables['system.pullRequest.sourceBranch'], 'refs/heads/release')]
+  isHotfixPR: $[startsWith(variables['system.pullRequest.sourceBranch'], 'refs/heads/hotfix')]
+  clientArtifactName: "Client"
+  serverArtifactName: "Server"
+  appArtifactName: "Test.Template.React.App.App"
+  buildProjects: "Test.Template.React.App.sln"
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  NUGET_PACKAGES: "$(Pipeline.Workspace)/.nuget/packages"
+  YARN_CACHE_FOLDER: "$(Pipeline.Workspace)/.yarn"
+  # CI: true
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: Build
+    displayName: Build Test.Template.React.App
+    dependsOn: []
+    jobs:
+      - template: jobs-build-react.yml
+        parameters:
+          artifactName: $(clientArtifactName)
+      - template: jobs-build-dotnet.yml
+        parameters:
+          artifactName: $(serverArtifactName)
+          buildProjects: $(buildProjects)
+
+  - stage: MergeArtifacts
+    displayName: Merge Artifacts
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables.isDevBranch, true))
+    jobs:
+      - template: jobs-merge-artifacts.yml
+        parameters:
+          clientArtifactName: $(clientArtifactName)
+          serverArtifactName: $(serverArtifactName)
+          outputArtifactName: $(appArtifactName)
+
+  - stage: DeployDev
+    displayName: Deploy to DEV d1
+    dependsOn: MergeArtifacts
+    condition: and(succeeded(), eq(variables.isDevBranch, true))
+    jobs:
+      - template: jobs-deploy.yml
+        parameters:
+          artifactName: $(appArtifactName)
+          environment: Development
+          environmentCode: d1
+          serviceConnection: Test.Template.React.App-AzureConnection-DEV
+          webAppName: isol-d1-appsrv-isolreacttmp # [Replace with target Azure App Service name]
+          keyVaultName: isol-d1-kv-isolreacttmp # [Replace with target Azure KeyVault name]
+
+  # - stage: DeployTest
+  #   displayName: Deploy to TEST t1
+  #   dependsOn: Build
+  #   condition: and(succeeded(), and(eq(variables.isTargetMainBranch, true), or(eq(variables.isReleasePR, true), eq(variables.isHotfixPR, true))))
+  #   jobs:
+  #     - template: jobs-deploy.yml
+  #       parameters:
+  #         artifactName: $(appArtifactName)
+  #         environment: Test
+  #         environmentCode: t1
+  #         serviceConnection: Test.Template.React.App-AzureConnection-PROD
+  #         webAppName: isol-t1-appsrv-isolreacttmp
+  #         keyVaultName: isol-t1-kv-isolreacttmp
+
+  # - stage: DeployProd
+  #   displayName: Deploy to PROD p1
+  #   dependsOn: Build
+  #   condition: and(succeeded(), eq(variables.isMainBranch, true))
+  #   jobs:
+  #     - template: jobs-deploy.yml
+  #       parameters:
+  #         artifactName: $(appArtifactName)
+  #         environment: Production
+  #         environmentCode: p1
+  #         serviceConnection: Test.Template.React.App-AzureConnection-PROD
+  #         webAppName: isol-p1-appsrv-isolreacttmp
+  #         keyVaultName: isol-p1-kv-isolreacttmp

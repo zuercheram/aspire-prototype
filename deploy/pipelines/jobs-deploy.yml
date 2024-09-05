@@ -1,0 +1,63 @@
+parameters:
+  - name: "artifactName"
+    type: string
+  - name: "environment"
+    type: string
+  - name: "environmentCode"
+    type: string
+  - name: "serviceConnection"
+    type: string
+  - name: "webAppName"
+    type: string
+  - name: "keyVaultName"
+    type: string
+
+jobs:
+  - deployment: Deploy
+    displayName: "Deploy ${{parameters.webAppName}}"
+    environment: ${{parameters.environment}}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
+            - task: AzureRmWebAppDeployment@4
+              displayName: Deploy Azure Web App
+              inputs:
+                ConnectionType: "AzureRM"
+                azureSubscription: ${{parameters.serviceConnection}}
+                appType: "webApp"
+                WebAppName: ${{parameters.webAppName}}
+                packageForLinux: "$(Agent.BuildDirectory)/${{parameters.artifactName}}/*.zip"
+
+  - deployment: ExecMigrations
+    displayName: Execute Migrations
+    environment: ${{parameters.environment}}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
+            - task: ExtractFiles@1
+              displayName: Extract migrations
+              inputs:
+                archiveFilePatterns: "$(Agent.BuildDirectory)/Server-Migrations/*.zip"
+                destinationFolder: "$(Agent.BuildDirectory)/migrations"
+                overwriteExistingFiles: true
+
+            - task: AzureKeyVault@1
+              displayName: Get connection string from Key Vault
+              inputs:
+                azureSubscription: ${{parameters.serviceConnection}}
+                keyVaultName: ${{parameters.keyVaultName}}
+                secretsFilter: "ConnectionStrings--Database"
+
+            - task: AzureCLI@2
+              displayName: Run migrations
+              inputs:
+                azureSubscription: ${{parameters.serviceConnection}}
+                workingDirectory: "$(Agent.BuildDirectory)/migrations"
+                scriptType: pscore
+                scriptLocation: inlineScript
+                inlineScript: |
+                  & dotnet "Test.Template.React.App.Domain.Migrations.dll" --Migration:IsProduction=true --Migration:ConnectionString="$(ConnectionStrings--Database)"

@@ -396,3 +396,21 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+.idea
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Terraform crash log files
+crash.log
+crash.*.log
+
+# project specific ignore
+*.orig
+src/Server/wwwroot/*
+src/Client/.vitest-preview/*
+/src/_logs-**

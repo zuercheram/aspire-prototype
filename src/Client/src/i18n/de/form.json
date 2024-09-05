@@ -1,0 +1,19 @@
+{
+  "cancel": "Stornieren",
+  "errors": {
+    "default": "Ungültiger Wert",
+    "format": "Ungültiges Format",
+    "invalidDate": "Ungültiges Datum",
+    "maxDate": "Das Datum sollte nicht nach {{max}}",
+    "maxLength": "Die Eingabe darf maximal {{max}} Zeichen lang sein",
+    "maxValue": "Der Wert darf maximal {{max}} sein.",
+    "minDate": "Das Datum sollte nicht vor {{min}}",
+    "minLength": "Die Eingabe muss mindestens {{min}} Zeichen lang sein",
+    "minValue": "Der Wert muss grösser oder gleich {{min}} sein.",
+    "mustBeNumber": "Die Eingabe muss eine Zahl sein",
+    "oneOf": "Ungültiger Wert, mögliche Werte: {{values}}",
+    "positiveNumber": "Muss eine positive Zahl sein",
+    "required": "Dies ist ein Pflichtfeld"
+  },
+  "submit": "Senden"
+}
