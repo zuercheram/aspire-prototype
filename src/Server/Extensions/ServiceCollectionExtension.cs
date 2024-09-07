@@ -1,7 +1,5 @@
-using Aspire.Prototype.Domain;
 using Aspire.Prototype.Server;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using Microsoft.OpenApi.Models;
@@ -66,16 +64,6 @@ public static class ServiceCollectionExtension
             options.IncludeSubDomains = true;
             options.MaxAge = TimeSpan.FromDays(60);
         });
-
-        return services;
-    }
-
-    public static IServiceCollection AddStorage(this IServiceCollection services, IConfiguration configuration)
-    {
-        // services.AddDbContext<ApplicationDbContext>(
-        //     options => options.UseSqlServer(configuration.GetConnectionString("Database"),
-        //         sqlOptions => sqlOptions.EnableRetryOnFailure()));
-
 
         return services;
     }

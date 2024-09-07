@@ -18,7 +18,6 @@ internal static class HostingExtensions
 
         builder.Services.AddInfrastructure()
             .AddSecurity(configuration)
-            .AddStorage(configuration)
             .AddSwagger(configuration)
             .AddTransient<ICustomHeaderService, SwaggerCspRelaxingHeaderService>()
             .AddServices();
