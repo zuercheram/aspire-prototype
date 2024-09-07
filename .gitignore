@@ -414,3 +414,4 @@ crash.*.log
 src/Server/wwwroot/*
 src/Client/.vitest-preview/*
 /src/_logs-**
+.azure
