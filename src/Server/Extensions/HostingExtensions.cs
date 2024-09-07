@@ -1,5 +1,4 @@
 using Aspire.Prototype.Domain;
-using Aspire.Prototype.Server.Extensions;
 using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using Serilog;
 
@@ -13,6 +12,8 @@ internal static class HostingExtensions
     {
         var configuration = builder.Configuration;
         _env = builder.Environment;
+
+        builder.Configuration.AddAzureKeyVaultSecrets("secrets");
 
         builder.AddSqlServerDbContext<ApplicationDbContext>("sqldb");
 

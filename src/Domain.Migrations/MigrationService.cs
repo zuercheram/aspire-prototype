@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry.Trace;
 
 namespace Aspire.Prototype.Domain.Migrations;
-
+#pragma warning disable CA1848 // Use the LoggerMessage delegates
 public class MigrationService : BackgroundService
 {
     public const string ActivitySourceName = "Migrations";
@@ -29,10 +29,12 @@ public class MigrationService : BackgroundService
         _hostApplicationLifetime = hostApplicationLifetime;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         // Migrate
+
         _logger.LogInformation("Running migrations");
+
         using var activity = s_activitySource.StartActivity("Migrating database", ActivityKind.Client);
 
 
@@ -41,7 +43,7 @@ public class MigrationService : BackgroundService
         if (_migrationOption.Clear)
         {
             _logger.LogInformation("Deleting database");
-            await dbContext.Database.EnsureDeletedAsync(cancellationToken);
+            await dbContext.Database.EnsureDeletedAsync(stoppingToken);
         }
 
         _logger.LogInformation("Migrating database");
@@ -52,9 +54,9 @@ public class MigrationService : BackgroundService
         {
             try
             {
-                await EnsureDatabaseAsync(dbContext, cancellationToken);
-                await RunMigrationAsync(dbContext, cancellationToken);
-                await SeedDataAsync(dbContext, _migrationOption, cancellationToken);
+                await EnsureDatabaseAsync(dbContext, stoppingToken);
+                await RunMigrationAsync(dbContext, stoppingToken);
+                await SeedDataAsync(dbContext, _migrationOption, stoppingToken);
                 break;
             }
             catch (SqlException ex)
@@ -129,8 +131,9 @@ public class MigrationService : BackgroundService
         });
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    public override Task StopAsync(CancellationToken cancellationToken)
     {
         return Task.CompletedTask;
     }
 }
+#pragma warning restore CA1848 // Use the LoggerMessage delegates

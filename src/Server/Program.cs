@@ -18,23 +18,7 @@ try
     builder.AddServiceDefaults();
 
     builder.WebHost
-        .ConfigureKestrel(serverOptions => { serverOptions.AddServerHeader = false; })
-        .ConfigureAppConfiguration((_, configurationBuilder) =>
-        {
-            var config = configurationBuilder.Build();
-            var azureKeyVaultEndpoint = config["AzureKeyVaultEndpoint"];
-            if (!string.IsNullOrEmpty(azureKeyVaultEndpoint))
-            {
-                // Add Secrets from KeyVault
-                Log.Information("Use secrets from {AzureKeyVaultEndpoint}", azureKeyVaultEndpoint);
-                configurationBuilder.AddAzureKeyVault(new Uri(azureKeyVaultEndpoint), new DefaultAzureCredential());
-            }
-            else
-            {
-                // Add Secrets from UserSecrets for local development
-                configurationBuilder.AddUserSecrets("7AC1F0C2-9807-44D0-895B-EB6FFAB421F9");
-            }
-        });
+        .ConfigureKestrel(serverOptions => { serverOptions.AddServerHeader = false; });        
 
     builder.Host.UseSerilog((context, loggerConfiguration) =>
         loggerConfiguration.ReadFrom.Configuration(context.Configuration));

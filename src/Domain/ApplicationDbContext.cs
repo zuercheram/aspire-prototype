@@ -7,8 +7,7 @@ public class ApplicationDbContext : DbContext
 {
 #pragma warning disable CS8618 // DbSet Properties are initialized on creation
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-    {
-        // TODO - consider disabling AutoDetectChangesEnabled to improve performance
+    {        
         // Make sure DetectChanges is called explicitly before UpdateTrackingEntityProperties() to be able to query for EntityState
         // Unfortunately this leads to concurrency issues on update due to the fact that tracking property value changes are not detected
     }

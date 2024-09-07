@@ -79,7 +79,6 @@ public static class ServiceCollectionExtension
                     Version = "v1",
                     Title = "Aspire.Prototype API",
                     Description = "Aspire.Prototype Description",
-                    TermsOfService = new Uri(configuration["TermsOfServiceUrl"] ?? string.Empty)
                 });
         });
 
