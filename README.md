@@ -107,3 +107,29 @@ If you want to learn more about creating good readme files then refer the follow
 - [ASP.NET Core](https://github.com/aspnet/Home)
 - [Visual Studio Code](https://github.com/Microsoft/vscode)
 - [Chakra Core](https://github.com/Microsoft/ChakraCore)
+
+## Publish Aspire .NET Project with CI/CD Pipeline in Github
+
+Create a manifest file:
+
+```PowerShell
+dotnet run --project .\src\AppHost\Aspire.Prototype.AppHost.csproj -- --publisher manifest --output-path ../aspire-manifest.json
+```
+
+You need the Azure developer cli in order to create Aspire configuration files and initialize the publishing.
+
+```PowerShell
+winget install microsoft.azd
+```
+
+With the Azure Developer CLI installed you can initialize the template for Aspire App publishing.
+
+Execute `azd init` in the root directory of the solution.
+
+```PowerShell
+azd init
+```
+
+In the wizard select `Use Code in the current directory`. Then it scans the directory and will list detected services, which should be the AppHost project.
+
+Select `Confirm and continue initializing my app` in the wizard and enter an environment name such as `dev` or `prod` when asked.

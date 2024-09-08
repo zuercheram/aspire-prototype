@@ -15,7 +15,8 @@ var secrets = builder.ExecutionContext.IsPublishMode
 
 builder.AddProject<Projects.Aspire_Prototype_Domain_Migrations>("migrations")
     .WithReference(sqldb)
-    .WithReference(insights);
+    .WithReference(insights)
+    .WithExternalHttpEndpoints();
 
 var server = builder.AddProject<Projects.Aspire_Prototype_Server>("server")
     .WithReference(secrets)

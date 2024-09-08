@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AnalysisMode>Recommended</AnalysisMode>
-    <UserSecretsId>45bcd5c4-ba56-4169-b368-527be87c61bb</UserSecretsId>
+    <UserSecretsId>45bcd5c4-ba56-4169-b368-527be87c61bb</UserSecretsId>    
   </PropertyGroup>
 
   <ItemGroup>

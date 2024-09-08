@@ -42,7 +42,7 @@
     },
     "migrations": {
       "type": "project.v0",
-      "path": "../Domain.Migrations/Aspire.Prototype.Domain.Migrations.csproj",
+      "path": "Domain.Migrations/Aspire.Prototype.Domain.Migrations.csproj",
       "env": {
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
@@ -53,7 +53,7 @@
     },
     "server": {
       "type": "project.v0",
-      "path": "../Server/Aspire.Prototype.Server.csproj",
+      "path": "Server/Aspire.Prototype.Server.csproj",
       "env": {
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
@@ -81,8 +81,8 @@
     },
     "react": {
       "type": "dockerfile.v0",
-      "path": "../Client/Dockerfile",
-      "context": "../Client",
+      "path": "Client/Dockerfile",
+      "context": "Client",
       "env": {
         "NODE_ENV": "development",
         "services__server__http__0": "{server.bindings.http.url}",
