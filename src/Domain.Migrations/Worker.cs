@@ -4,29 +4,26 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Trace;
 
 namespace Aspire.Prototype.Domain.Migrations;
-#pragma warning disable CA1848 // Use the LoggerMessage delegates
-public class MigrationService : BackgroundService
+
+public class Worker : BackgroundService
 {
     public const string ActivitySourceName = "Migrations";
-    private readonly ILogger<MigrationService> _logger;
     private readonly MigrationOptions _migrationOption;
     private readonly IServiceProvider _serviceProvider;
     private readonly IHostApplicationLifetime _hostApplicationLifetime;
     private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
+    private readonly ILogger<Worker> _logger;
 
-    public MigrationService(IServiceProvider serviceProvider, IHostApplicationLifetime hostApplicationLifetime, ILogger<MigrationService> logger, IOptions<MigrationOptions> migrationOptions)
+    public Worker(IServiceProvider serviceProvider, IHostApplicationLifetime hostApplicationLifetime, IOptions<MigrationOptions> migrationOptions, ILogger<Worker> logger)
     {
         _serviceProvider = serviceProvider;
-        _logger = logger;
         _migrationOption = migrationOptions.Value;
         _hostApplicationLifetime = hostApplicationLifetime;
+        _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -79,8 +76,6 @@ public class MigrationService : BackgroundService
             throw new TimeoutException("Migration failed after several retries");
         }
 
-
-
         _hostApplicationLifetime.StopApplication();
     }
 
@@ -130,10 +125,4 @@ public class MigrationService : BackgroundService
             await transaction.CommitAsync(cancellationToken);
         });
     }
-
-    public override Task StopAsync(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
-    }
 }
-#pragma warning restore CA1848 // Use the LoggerMessage delegates

@@ -1,22 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AnalysisMode>Recommended</AnalysisMode>
-    <UserSecretsId>45bcd5c4-ba56-4169-b368-527be87c61bb</UserSecretsId>    
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-DotNet.ContainerImage-8ea16d7f-7493-4bab-a5aa-e69d7aab2caa</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,5 +37,4 @@
     <ProjectReference Include="..\Domain\Aspire.Prototype.Domain.csproj" />
     <ProjectReference Include="..\ServiceDefaults\Aspire.Prototype.ServiceDefaults.csproj" />
   </ItemGroup>
-
 </Project>
