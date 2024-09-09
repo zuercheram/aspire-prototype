@@ -1,16 +1,11 @@
-FROM node:20 as build
+FROM node:18 AS build
 
 WORKDIR /app
 
-COPY package.json package.json
-COPY yarn.lock yarn.lock
-
-RUN corepack enable
-RUN yarn set version 3.6.3
-RUN yarn install
-
 COPY . .
 
+RUN yarn set version 3.6.3
+RUN yarn install
 RUN yarn build
 
 FROM nginx:alpine
