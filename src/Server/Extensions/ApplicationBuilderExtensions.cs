@@ -8,7 +8,7 @@ public static class ApplicationBuilderExtensions
     {
         applicationBuilder.Use(async (httpContext, func) =>
         {
-            if (segments.Any(s => httpContext.Request.Path.StartsWithSegments(s)))
+            if (segments.ToList().Exists(s => httpContext.Request.Path.StartsWithSegments(s)))
             {
                 httpContext.Request.Headers[HeaderNames.XRequestedWith] = "XMLHttpRequest";
             }

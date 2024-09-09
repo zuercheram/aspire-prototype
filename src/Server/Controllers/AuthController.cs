@@ -51,7 +51,9 @@ public class AuthController : ControllerBase
     [HttpGet("User")]
     public ActionResult<UserInfo> GetCurrentUser()
     {
+#pragma warning disable CA1848 // Use the LoggerMessage delegates
         _logger.LogDebug("Get current user");
+#pragma warning restore CA1848 // Use the LoggerMessage delegates
 
         return Ok(CreateUserInfo(User));
     }
