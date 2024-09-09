@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json package.json
 COPY yarn.lock yarn.lock
 
-RUN npm install yarn
+RUN npm install -g yarn
 RUN yarn set version 3.6.3
 RUN yarn install
 
