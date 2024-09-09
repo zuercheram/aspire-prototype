@@ -42,6 +42,7 @@
     "react-router-dom": "^6.10.0",
     "react-window": "^1.8.9",
     "vite-plugin-pwa": "^0.14.7",
+    "yarn": "^1.22.22",
     "yup": "^1.2.0"
   },
   "devDependencies": {

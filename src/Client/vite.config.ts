@@ -17,7 +17,7 @@ export default defineConfig({
     force: true,
   },
   build: {
-    outDir: "../Server/wwwroot",
+    outDir: "./dist",
     emptyOutDir: true,
     rollupOptions: {
       output: {

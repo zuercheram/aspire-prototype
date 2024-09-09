@@ -1,5 +1,6 @@
+import { FieldValues } from "react-hook-form";
 import { PropsWithChildren, ReactElement, useMemo } from "react";
-import { ObjectSchema } from "yup";
+import { AnyObject, ObjectSchema } from "yup";
 
 import { FormContext } from "./FormContext";
 import type { FormValuesObject } from "./FormValuesObject";
@@ -17,7 +18,9 @@ export const FormContextProvider = <T extends FormValuesObject>({
 }: PropsWithChildren<FormContextProviderProps<T>>): ReactElement => {
   const formInfo = useMemo(
     () => ({
-      requiredFields: getRequiredFields<Partial<T>>(schema),
+      requiredFields: getRequiredFields<Partial<T>>(
+        schema as ObjectSchema<FieldValues, AnyObject, any, "">
+      ),
       formFields: Object.keys(schema.describe().fields),
     }),
     [schema]
