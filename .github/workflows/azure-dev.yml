@@ -50,6 +50,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: development
+    needs: privsioning
     env:
       AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
     steps:
