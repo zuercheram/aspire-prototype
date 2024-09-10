@@ -32,3 +32,5 @@ builder.AddYarnApp($"{prefix}-react", "../Client", "dev")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
 
+var host = builder.Build();
+host.Run();

@@ -8,7 +8,7 @@ builder.Services.AddHostedService<Worker>();
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracing => tracing.AddSource(Worker.ActivitySourceName));
 
-builder.AddSqlServerDbContext<ApplicationDbContext>("sqldb", null, options => {
+builder.AddSqlServerDbContext<ApplicationDbContext>("apsire-prototype-dev-sql-database", null, options => {
     options.UseSqlServer(options => {
         options.MigrationsAssembly(typeof(Worker).Assembly.FullName);
         options.EnableRetryOnFailure();
@@ -17,4 +17,6 @@ builder.AddSqlServerDbContext<ApplicationDbContext>("sqldb", null, options => {
 });
 
 var host = builder.Build();
+#pragma warning disable S6966 // Awaitable method should be used
 host.Run();
+#pragma warning restore S6966 // Awaitable method should be used

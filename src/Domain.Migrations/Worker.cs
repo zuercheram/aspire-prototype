@@ -49,6 +49,7 @@ public class Worker : BackgroundService
         int retries;
         for (retries = 0; retries < maxRetries; retries++)
         {
+#pragma warning disable S2139 // Exceptions should be either logged or rethrown but not both
             try
             {
                 await EnsureDatabaseAsync(dbContext, stoppingToken);
@@ -69,6 +70,7 @@ public class Worker : BackgroundService
                 activity?.RecordException(ex);
                 throw;
             }
+#pragma warning restore S2139 // Exceptions should be either logged or rethrown but not both
         }
 
         if (retries >= maxRetries)

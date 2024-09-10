@@ -13,9 +13,9 @@ internal static class HostingExtensions
         var configuration = builder.Configuration;
         _env = builder.Environment;
 
-        builder.Configuration.AddAzureKeyVaultSecrets("secrets");
+        builder.Configuration.AddAzureKeyVaultSecrets("apsire-prototype-dev-secrets");
 
-        builder.AddSqlServerDbContext<ApplicationDbContext>("sqldb");
+        builder.AddSqlServerDbContext<ApplicationDbContext>("apsire-prototype-dev-sql-database");
 
         builder.Services.AddInfrastructure()
             .AddSecurity(configuration)

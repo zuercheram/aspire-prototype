@@ -67,7 +67,7 @@ internal static class DeveloperSeeding
 
                         var measure = drink.GetProperty($"strMeasure{i}").GetString();
 
-                        if (drinkEntity.DrinkIngredients.Any(p => p.Ingredient != null && p.Ingredient.Name == ingredientEntity.Name))
+                        if (drinkEntity.DrinkIngredients.Exists(p => p.Ingredient != null && p.Ingredient.Name == ingredientEntity.Name))
                             continue; // do not add same ingredient multiple times
 
                         drinkEntity.DrinkIngredients.Add(new DrinkIngredient { Drink = drinkEntity, Ingredient = ingredientEntity, Measure = measure ?? "", Step = (short)i });
