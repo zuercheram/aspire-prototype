@@ -16,8 +16,9 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  privsioning:
     runs-on: ubuntu-latest
+    environment: production
     env:
       AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
@@ -58,8 +59,17 @@ jobs:
 
       - name: Provision Infrastructure
         run: azd provision --no-prompt
-        # env:
-        #   AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
+    steps:
+      - name: Refresh azd env (pulls latest infrastructure provision)
+        run: azd env refresh
+        env:
+          AZURE_LOCATION: ${{ env.AZURE_LOCATION }}
 
       - name: Deploy Application
         run: azd deploy --no-prompt
