@@ -22,7 +22,8 @@ builder.AddProject<Projects.Aspire_Prototype_Domain_Migrations>($"{prefix}-migra
 var server = builder.AddProject<Projects.Aspire_Prototype_Server>($"{prefix}-server")
     .WithReference(secrets)
     .WithReference(sqldb)
-    .WithReference(insights);
+    .WithReference(insights)
+    .WithExternalHttpEndpoints();
 
 builder.AddYarnApp($"{prefix}-react", "../Client", "dev")
     .WithReference(server)
