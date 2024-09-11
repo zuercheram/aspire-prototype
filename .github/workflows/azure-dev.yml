@@ -69,6 +69,9 @@ jobs:
     environment: production
     needs: build
     steps:
+      - name: Install azd
+        uses: Azure/setup-azd@v1.0.0
+
       - name: Refresh azd env (pulls latest infrastructure provision)
         run: azd env refresh
         env:
