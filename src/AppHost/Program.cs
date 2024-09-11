@@ -2,7 +2,7 @@ using Aspire.Prototype.AppHost.CustomHostingModel;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var prefix = "apsire-prototype-dev";
+var prefix = "apsire-prototype";
 
 // Automatically provision an Application Insights resource
 var insights = builder.ExecutionContext.IsPublishMode

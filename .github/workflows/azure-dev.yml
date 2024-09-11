@@ -26,8 +26,6 @@ jobs:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
       AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
-      ASPNETCORE_ENVIRONMENT: ${{ vars.ASPNETCORE_ENVIRONMENT }}
-      DOTNET_ENVIRONMENT: ${{ vars.DOTNET_ENVIRONMENT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -63,6 +61,8 @@ jobs:
         run: azd provision --no-prompt
         env:
           AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
+          ASPNETCORE_ENVIRONMENT: ${{ vars.ASPNETCORE_ENVIRONMENT }}
+          DOTNET_ENVIRONMENT: ${{ vars.DOTNET_ENVIRONMENT }}
 
       - name: Deploy Application
         run: azd deploy --no-prompt
