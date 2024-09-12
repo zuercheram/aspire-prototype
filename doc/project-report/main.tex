@@ -74,7 +74,7 @@
 
 % Pakete für Literatur + zitieren, authoryear-ibid
 \usepackage[backend=biber, style=authoryear-ibid, autocite=footnote, maxnames=4, ibidpage=true, dashed=false]{biblatex}
-\addbibresource{Verzeichnisse/literatur.bib}
+\addbibresource{doc/project-report/Verzeichnisse/literatur.bib}
 \usepackage{csquotes} % für Zitate
 
 %% Für Codeblöcke mit Syntax-Highlighting
@@ -116,6 +116,13 @@ citecolor = black] {hyperref}
     %--------------------------------------------------------------------------------------------------------------------------------
     \include{Text/01_deckblatt}
     \newgeometry{left=45mm, right=20mm, top=30mm, bottom=30mm}
+
+    %---------------------------------------------------------------------------------------------------------------------------------
+    %                                       Abstract
+    %---------------------------------------------------------------------------------------------------------------------------------
+    \pagenumbering{Roman}
+    \include{Text/00_abstract}
+    \newpage
 
     %--------------------------------------------------------------------------------------------------------------------------------
     %                                       Verzeichnisse
