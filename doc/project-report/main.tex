@@ -72,8 +72,8 @@
 %\usepackage{tocloft} %Zeilenabstand in Verzeichnissen anpassen
 %\usepackage{hyphenat} %Silbentrennung für einzelne Wörter verhindern mit \nohyphens{text}
 
-% Pakete für Literatur + zitieren, authoryear-ibid
-\usepackage[backend=biber, style=authoryear-ibid, autocite=footnote, maxnames=4, ibidpage=true, dashed=false]{biblatex}
+% Pakete für Literatur + zitieren, apa
+\usepackage[backend=biber, style=numeric, autocite=footnote, maxnames=99]{biblatex}
 \addbibresource{doc/project-report/Verzeichnisse/literatur.bib}
 \usepackage{csquotes} % für Zitate
 
@@ -162,7 +162,7 @@ citecolor = black] {hyperref}
     %-------------------------------------------------------------------------------------------------------------------
     % ab hier Nummerierung oben in arabisch, beginngend mit 1
     \pagenumbering{Roman}
-    \setcounter{page}{3}
+    \setcounter{page}{4}
     \pagenumbering{arabic}
     \begin{spacing}{1.5} % Zeilenabstand: 1,5 fuer den Textteil
     
