@@ -8,7 +8,7 @@ builder.Services.AddHostedService<Worker>();
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracing => tracing.AddSource(Worker.ActivitySourceName));
 
-builder.AddSqlServerDbContext<ApplicationDbContext>("apsire-prototype-dev-sql-database", null, options => {
+builder.AddSqlServerDbContext<ApplicationDbContext>("apsire-prototype-sql-database", null, options => {
     options.UseSqlServer(options => {
         options.MigrationsAssembly(typeof(Worker).Assembly.FullName);
         options.EnableRetryOnFailure();

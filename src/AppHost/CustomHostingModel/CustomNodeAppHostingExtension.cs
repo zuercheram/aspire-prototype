@@ -5,7 +5,19 @@ using Microsoft.Extensions.Hosting;
 namespace Aspire.Prototype.AppHost.CustomHostingModel;
 public static class CustomNodeAppHostingExtension
 {
-    public static IResourceBuilder<NodeAppResource> AddYarnApp(this IDistributedApplicationBuilder builder, string name, string workingDirectory, string scriptName = "dev", string[]? args = null)
+    public static IResourceBuilder<NodeAppResource> AddYarnApp(this IDistributedApplicationBuilder builder, string name, string workingDirectory, string scriptName = "serve", string[]? args = null)
+    {
+        string[] allArgs = args is { Length: > 0 }
+            ? [scriptName, "--", .. args]
+            : [scriptName];
+
+        workingDirectory = NormalizePathForCurrentPlatform(Path.Combine(builder.AppHostDirectory, workingDirectory));
+        var resource = new NodeAppResource(name, "npx nx", workingDirectory);
+
+        return builder.AddResource(resource).WithNodeDefaults().WithArgs(allArgs);
+    }
+
+    public static IResourceBuilder<NodeAppResource> AddNxApp(this IDistributedApplicationBuilder builder, string name, string workingDirectory, string scriptName = "dev", string[]? args = null)
     {
         string[] allArgs = args is { Length: > 0 }
             ? [scriptName, "--", .. args]
