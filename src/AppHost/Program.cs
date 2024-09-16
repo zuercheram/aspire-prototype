@@ -12,7 +12,7 @@ var serviceBus = builder.ExecutionContext.IsPublishMode
 builder.AddProject<MessageWorker>("messageworker")
     .WithReference(serviceBus);
 
-var weatherApi = builder.AddProject<MinimalApi>("weatherapi")
+var weatherApi = builder.AddProject<MinimalApi>("messagesapi")
     .WithReference(postgresdb)
     .WithExternalHttpEndpoints();
 

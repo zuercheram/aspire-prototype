@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json.schemastore.org/aspire-8.0.json",
+  "resources": {
+    "postgres": {
+      "type": "azure.bicep.v0",
+      "connectionString": "{postgres.secretOutputs.connectionString}",
+      "path": "postgres.module.bicep",
+      "params": {
+        "keyVaultName": "",
+        "administratorLogin": "{postgres-username.value}",
+        "administratorLoginPassword": "{postgres-password.value}"
+      }
+    },
+    "postgresdb": {
+      "type": "value.v0",
+      "connectionString": "{postgres.connectionString};Database=postgresdb"
+    },
+    "messaging": {
+      "type": "azure.bicep.v0",
+      "connectionString": "{messaging.outputs.serviceBusEndpoint}",
+      "path": "messaging.module.bicep",
+      "params": {
+        "principalId": "",
+        "principalType": ""
+      }
+    },
+    "messageworker": {
+      "type": "project.v0",
+      "path": "src/MessageWorker/MessageWorker.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ConnectionStrings__messaging": "{messaging.connectionString}"
+      }
+    },
+    "messagesapi": {
+      "type": "project.v0",
+      "path": "src/MinimalApi/MinimalApi.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true",
+        "HTTP_PORTS": "{messagesapi.bindings.http.targetPort}",
+        "ConnectionStrings__postgresdb": "{postgresdb.connectionString}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http",
+          "external": true
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http",
+          "external": true
+        }
+      }
+    },
+    "angular": {
+      "type": "dockerfile.v0",
+      "path": "src/Frontend/Dockerfile",
+      "context": "src/Frontend",
+      "env": {
+        "NODE_ENV": "development",
+        "services__messagesapi__http__0": "{messagesapi.bindings.http.url}",
+        "services__messagesapi__https__0": "{messagesapi.bindings.https.url}",
+        "PORT": "{angular.bindings.http.targetPort}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http",
+          "targetPort": 8000,
+          "external": true
+        }
+      }
+    },
+    "messagereceiver": {
+      "type": "project.v0",
+      "path": "src/MessageReceiver/MessageReceiver.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ConnectionStrings__postgresdb": "{postgresdb.connectionString}",
+        "ConnectionStrings__messaging": "{messaging.connectionString}"
+      }
+    },
+    "data-model-migrations": {
+      "type": "project.v0",
+      "path": "src/Data.Model.Migrations/Data.Model.Migrations.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ConnectionStrings__postgresdb": "{postgresdb.connectionString}"
+      }
+    },
+    "postgres-username": {
+      "type": "parameter.v0",
+      "value": "{postgres-username.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string",
+          "default": {
+            "generate": {
+              "minLength": 10,
+              "numeric": false,
+              "special": false
+            }
+          }
+        }
+      }
+    },
+    "postgres-password": {
+      "type": "parameter.v0",
+      "value": "{postgres-password.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string",
+          "secret": true,
+          "default": {
+            "generate": {
+              "minLength": 22
+            }
+          }
+        }
+      }
+    }
+  }
+}
