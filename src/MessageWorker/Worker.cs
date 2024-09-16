@@ -45,7 +45,7 @@ public class Worker : BackgroundService
 
                 await sender.SendMessagesAsync(messageBatch, stoppingToken);
 
-                await Task.Delay(1000*60, stoppingToken);
+                await Task.Delay(1000*60*60, stoppingToken);
             }
         }
         finally
