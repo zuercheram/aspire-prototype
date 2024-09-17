@@ -4,7 +4,7 @@
 % Vorgaben Assignment aus Studienheft SQL301
 %-------------------------------------------
 % Umfang: 8 - 10 Seiten (inkl. Abbildungen und Tabellen, ohne Deckblatt, Gliederung und Literaturverzeichnis, Eidesstattliche Erklaerung)
-% Zeilenabstand: 1,5, Tabellen 1,0 
+% Zeilenabstand: 1,5, Tabellen 1,0
 % Schriftart: frei
 % Schriftgrad: 11 oder 12 pt
 % Tabellen auch 10pt
@@ -121,7 +121,7 @@ citecolor = black] {hyperref}
     %                                       Abstract
     %---------------------------------------------------------------------------------------------------------------------------------
     \pagenumbering{Roman}
-    \include{Text/00_abstract}
+    \include{Text/02_abstract}
     \newpage
 
     %--------------------------------------------------------------------------------------------------------------------------------
@@ -134,29 +134,29 @@ citecolor = black] {hyperref}
         % Inhaltsverzeichnis
         \thispagestyle{empty}
         \pdfbookmark{\contentsname}{toc}
-        \tableofcontents 
+        \tableofcontents
         \newpage
-        
+
         % ab hier Nummerierung oben in Römisch, beginnend mit 3
         \pagenumbering{Roman}
         \setcounter{page}{3}
-        % Abbildungsverzeichnis, 
-        \listoffigures 
+        % Abbildungsverzeichnis,
+        \listoffigures
         \newpage
-        
+
         % Tabellenverzeichnis
-        \listoftables 
+        \listoftables
         \newpage
-        
+
         % Abkürzungsverzeichnis
         \addcontentsline{toc}{section}{Abkürzungsverzeichnis}
         \printacronyms[heading=section*, name=Abkürzungsverzeichnis, template=tabular]
         \newpage
-        
+
         % Formelverzeichnis
         %\listof{Formel}{Formelübersicht}
         \setcounter{savepage}{\value{page}} %speichert Seitenzahl für spätere folgende Römische Nummerierung
-    \end{spacing} 
+    \end{spacing}
     %-------------------------------------------------------------------------------------------------------------------
     %                     Ab hier der eigentliche Textteil
     %-------------------------------------------------------------------------------------------------------------------
@@ -165,20 +165,23 @@ citecolor = black] {hyperref}
     \setcounter{page}{4}
     \pagenumbering{arabic}
     \begin{spacing}{1.5} % Zeilenabstand: 1,5 fuer den Textteil
-    
+
         % Einleitung
         \sloppy%Leerräume dürfen gedehnt werden
         \pdfbookmark{Kapitel}{kapitel}
-        \include{Text/02_einleitung}
-        
-        % Grundlagen
-        \include{Text/03_grundlagen}
-        
-        % Hauppteil
-        \include{Text/04_hauptteil}
-        
-        % Schluss
-        \include{Text/06_schluss}
+        \include{Text/03_einleitung}
+
+        % Recherche
+        \include{Text/04_recherche}
+
+        % Implementierung
+        \include{Text/05_implementierung}
+
+        % ergebnis
+        \include{Text/06_ergebnis}
+
+        % Fazit
+        \include{Text/07_fazit}
     \end{spacing}
     %-------------------------------------------------------------------------------------------------------------------
     %                     Literaturverzeichnis + Anhang
@@ -186,10 +189,10 @@ citecolor = black] {hyperref}
     % ab hier Römisch, folgend auf Verzeichnisse
     \pagenumbering{Roman}
     \setcounter{page}{\value{savepage}}
-    
+
     % Anhang, bei Nichtbedarf auskommentieren
     \include{Verzeichnisse/anhang}
-    
+
     % Literaturverzeichnis
     \printbibliography[title=Literaturverzeichnis]
     %\printbibliography[keyword=Bilder, heading=subbibliography, title={Bildernachweis}]
