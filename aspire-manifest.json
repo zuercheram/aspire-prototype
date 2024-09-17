@@ -4,7 +4,7 @@
     "postgres": {
       "type": "azure.bicep.v0",
       "connectionString": "{postgres.secretOutputs.connectionString}",
-      "path": "postgres.module.bicep",
+      "path": "infra/postgres/postgres.module.bicep",
       "params": {
         "keyVaultName": "",
         "administratorLogin": "{postgres-username.value}",
@@ -18,7 +18,7 @@
     "messaging": {
       "type": "azure.bicep.v0",
       "connectionString": "{messaging.outputs.serviceBusEndpoint}",
-      "path": "messaging.module.bicep",
+      "path": "infra/messaging/messaging.module.bicep",
       "params": {
         "principalId": "",
         "principalType": ""

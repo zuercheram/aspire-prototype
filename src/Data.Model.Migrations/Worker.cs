@@ -51,7 +51,7 @@ public class Worker : BackgroundService
             try
             {
                 await EnsureDatabaseAsync(dbContext, stoppingToken);
-                await RunMigrationAsync(dbContext, stoppingToken);                
+                await RunMigrationAsync(dbContext, stoppingToken);
                 break;
             }
             catch (SqlException ex)
@@ -74,6 +74,8 @@ public class Worker : BackgroundService
         {
             throw new TimeoutException("Migration failed after several retries");
         }
+
+        Environment.Exit(0);
     }
 
     private static async Task EnsureDatabaseAsync(ApplicationDbContext dbContext, CancellationToken cancellationToken)
