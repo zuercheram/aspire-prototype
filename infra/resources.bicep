@@ -81,12 +81,18 @@ resource explicitContributorUserRoleAssignment 'Microsoft.Authorization/roleAssi
   }
 }
 
+@description('This is the built-in Contributor role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
+resource environmentManagerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
+  scope: containerAppEnvironment
+  name: '57cc5028-e6a7-4284-868d-0611c5923f8d'
+}
+
 resource explicitEnvironmentManagerUserRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('container-reg-rbac', containerAppEnvironment.id, resourceGroup().id, principalId, 'bdb40013-e4c1-4b2a-bbc1-e638e9c2e393')
+  name: guid('container-reg-rbac', containerAppEnvironment.id, resourceGroup().id, 'bdb40013-e4c1-4b2a-bbc1-e638e9c2e393')
   scope: containerAppEnvironment
   properties: {
-    principalId: principalId
-    roleDefinitionId: tenantResourceId('Microsoft.Authorization/roleDefinitions', 'bdb40013-e4c1-4b2a-bbc1-e638e9c2e393')
+    principalId: 'bdb40013-e4c1-4b2a-bbc1-e638e9c2e393'
+    roleDefinitionId: environmentManagerRoleDefinition.id
   }
 }
 
