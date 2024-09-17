@@ -77,7 +77,7 @@ resource explicitContributorUserRoleAssignment 'Microsoft.Authorization/roleAssi
   scope: containerAppEnvironment
   properties: {
     principalId: principalId
-    roleDefinitionId:  subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
   }
 }
 
@@ -86,7 +86,7 @@ resource explicitEnvironmentManagerUserRoleAssignment 'Microsoft.Authorization/r
   scope: containerAppEnvironment
   properties: {
     principalId: principalId
-    roleDefinitionId:  subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'bdb40013-e4c1-4b2a-bbc1-e638e9c2e393')
+    roleDefinitionId: tenantResourceId('Microsoft.Authorization/roleDefinitions', 'bdb40013-e4c1-4b2a-bbc1-e638e9c2e393')
   }
 }
 
