@@ -1,0 +1,28 @@
+\glsdefs@newdocentry{idp}%
+{%
+name={Identity Provider},%
+sort={Identity Provider},%
+type={main},%
+first={Identity Provider},%
+firstplural={Identity Providers},%
+text={Identity Provider},%
+plural={Identity Providers},%
+description={This is a service that provides authentication by verifying the identity of a user.},%
+descriptionplural={This is a service that provides authentication by verifying the identity of a user.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+

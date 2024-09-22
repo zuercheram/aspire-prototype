@@ -77,6 +77,10 @@
 \addbibresource{doc/project-report/Verzeichnisse/literatur.bib}
 \usepackage{csquotes} % für Zitate
 
+% Paket für Glossar
+\usepackage[toc]{glossaries}
+\makeglossaries
+
 %% Für Codeblöcke mit Syntax-Highlighting
 %% http://www.ctan.org/tex-archive/macros/latex/contrib/minted/
 %% Einkommentieren fuer Minted Syntax Highlighting
@@ -105,6 +109,7 @@ citecolor = black] {hyperref}
 
 \input{Einstellungen/einstellungen}
 \input{Verzeichnisse/abkuerzungen}
+\input{Verzeichnisse/glossar}
 \input{Verzeichnisse/urls}
 %--------------------------------------------------------------------------------------------------------------------------------
 %                                       Dokument begin
@@ -190,11 +195,14 @@ citecolor = black] {hyperref}
     \pagenumbering{Roman}
     \setcounter{page}{\value{savepage}}
 
-    % Anhang, bei Nichtbedarf auskommentieren
-    \include{Verzeichnisse/anhang}
-
     % Literaturverzeichnis
     \printbibliography[title=Literaturverzeichnis]
     %\printbibliography[keyword=Bilder, heading=subbibliography, title={Bildernachweis}]
     %\printbibliography[keyword=Teile, heading=subbibliography, title={Nachweis Teileliste}]
+
+    % Glossar
+    \printglossaries
+
+    % Anhang, bei Nichtbedarf auskommentieren
+    \include{Verzeichnisse/anhang}
 \end{document}
