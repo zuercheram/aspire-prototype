@@ -74,15 +74,15 @@
 
 % Pakete für Literatur + zitieren, apa
 \usepackage[backend=biber, style=numeric, autocite=footnote, maxnames=99]{biblatex}
-\addbibresource{doc/project-report/Verzeichnisse/literatur.bib}
+\addbibresource{Verzeichnisse/literatur.bib}
 \usepackage{csquotes} % für Zitate
 
 % Paket für Glossar
-\usepackage[toc, acronym]{glossaries}
-\makeglossaries
+\usepackage[toc, acronym, nonumberlist ]{glossaries}
+\makenoidxglossaries
 
-\input{doc/project-report/Verzeichnisse/abkuerzungen}
-\input{doc/project-report/Verzeichnisse/glossar}
+\loadglsentries[acronym]{Verzeichnisse/abkuerzungen}
+\loadglsentries{Verzeichnisse/glossar}
 
 
 %% Für Codeblöcke mit Syntax-Highlighting
@@ -180,9 +180,6 @@ citecolor = black] {hyperref}
         % Implementierung
         \include{Text/05_implementierung}
 
-        \gls{latex}
-        \acrshort{gcd}
-
         % ergebnis
         \include{Text/06_ergebnis}
 
@@ -202,13 +199,11 @@ citecolor = black] {hyperref}
     % \printbibliography[title=Literaturverzeichnis]
     %\printbibliography[keyword=Bilder, heading=subbibliography, title={Bildernachweis}]
     %\printbibliography[keyword=Teile, heading=subbibliography, title={Nachweis Teileliste}]
-
-    % Abkürzungsverzeichnis    
-    \printglossary[type=\acronymtype, title=Abkürzungen, toctitle=Abkürzungen]
-    \newpage
     
     % Glossar
-    \printglossary[title=Glossar, toctitle=Glossar]
+    \printnoidxglossary[type=\acronymtype,title=Abkürzungen,nonumberlist]
+
+    \printnoidxglossary[title=Glossar,nonumberlist]
 
     % Anhang, bei Nichtbedarf auskommentieren
     \include{Verzeichnisse/anhang}
