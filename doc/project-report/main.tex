@@ -78,8 +78,12 @@
 \usepackage{csquotes} % für Zitate
 
 % Paket für Glossar
-\usepackage[toc]{glossaries}
+\usepackage[toc, acronym]{glossaries}
 \makeglossaries
+
+\input{doc/project-report/Verzeichnisse/abkuerzungen}
+\input{doc/project-report/Verzeichnisse/glossar}
+
 
 %% Für Codeblöcke mit Syntax-Highlighting
 %% http://www.ctan.org/tex-archive/macros/latex/contrib/minted/
@@ -109,7 +113,6 @@ citecolor = black] {hyperref}
 
 \input{Einstellungen/einstellungen}
 \input{Verzeichnisse/abkuerzungen}
-\input{Verzeichnisse/glossar}
 \input{Verzeichnisse/urls}
 %--------------------------------------------------------------------------------------------------------------------------------
 %                                       Dokument begin
@@ -153,11 +156,6 @@ citecolor = black] {hyperref}
         \listoftables
         \newpage
 
-        % Abkürzungsverzeichnis
-        \addcontentsline{toc}{section}{Abkürzungsverzeichnis}
-        \printacronyms[heading=section*, name=Abkürzungsverzeichnis, template=tabular]
-        \newpage
-
         % Formelverzeichnis
         %\listof{Formel}{Formelübersicht}
         \setcounter{savepage}{\value{page}} %speichert Seitenzahl für spätere folgende Römische Nummerierung
@@ -182,6 +180,9 @@ citecolor = black] {hyperref}
         % Implementierung
         \include{Text/05_implementierung}
 
+        \gls{latex}
+        \acrshort{gcd}
+
         % ergebnis
         \include{Text/06_ergebnis}
 
@@ -195,13 +196,19 @@ citecolor = black] {hyperref}
     \pagenumbering{Roman}
     \setcounter{page}{\value{savepage}}
 
+    \clearpage
+
     % Literaturverzeichnis
-    \printbibliography[title=Literaturverzeichnis]
+    % \printbibliography[title=Literaturverzeichnis]
     %\printbibliography[keyword=Bilder, heading=subbibliography, title={Bildernachweis}]
     %\printbibliography[keyword=Teile, heading=subbibliography, title={Nachweis Teileliste}]
 
+    % Abkürzungsverzeichnis    
+    \printglossary[type=\acronymtype, title=Abkürzungen, toctitle=Abkürzungen]
+    \newpage
+    
     % Glossar
-    \printglossaries
+    \printglossary[title=Glossar, toctitle=Glossar]
 
     % Anhang, bei Nichtbedarf auskommentieren
     \include{Verzeichnisse/anhang}
