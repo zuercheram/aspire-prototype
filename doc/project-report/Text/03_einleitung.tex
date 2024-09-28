@@ -3,7 +3,7 @@
         \subsubsection{Umfeld}
             Die Isolutions AG ist ein IT-Service Dienstleister mit Fokus auf Microsoft Services und Individualentwicklung. Für die Umsetzung von Individualentwicklungen verwendet Isolutions AG in erster Linie:
             \begin{itemize}
-                \item ASP.NET Web Api
+                \item ASP.NET Web API
                 \item C\#
                 \item Azure Services
                 \item React, Blazor oder Angular
@@ -12,13 +12,40 @@
             Je nach Bedarf kommen auch andere Technologien zum Einsatz. Spezialisiert ist die Isolutions AG auf in Azure gehostete Webapplikationen.
 
         \subsubsection{Problemstellung}
-            Zu Begin eines Projekts fällt in der Regel ein Aufwand von 3-5 Personentagen an, um die Entwicklungsumgebung aufzubauen. Services wie Datenbanken,
+            Zu Begin eines Projekts fällt in der Regel ein Aufwand von 3-5 Personentagen an, um die Entwicklungsumgebung aufzubauen. Die lokale Entwicklungsumgebung muss aufgesetzt werden. Das Beinhaltet unter umständen, dass lokale Datenbanken aufgebaut werden müssen, weitere Dienste installiert oder in Containern bereitgestellt werden.
+            Weiter wird die Sourcecode Verwaltung in Azure Devops benötigt. Dazu gehören Build und Deployment Pipeline mit entsprechenden Tools zur Qualitätsicherung.
+            Mindestens eine Stage muss ebenfalls aufgebaut werden, um das deployment zu testen und die Applikation in einer remote Umgebung zu testen.
 
-\subsection{Ziele der Arbeit}
-Auflistung der Ziele
+            Diese initialen Aufwände bedeuten weniger Budget für die Umsetzung von Funktionalität und führen zu einer längeren Time-to-Market. Um diesem Umstand entgegen zu wirken, wurde das so genannte Kickstarter Template entwickelt. Diese Vorlage enthält eine komplette Webapplikation mit wahlweise einem Blazor oder React Frontend, einer Backend-For-Frontend ASP.Net WebApi und einer SQL Datenbank. Frontend und Backend enthalten UI und Logik um eine Entität zu verwalten. Der komplette CRUD Workflow für diese Entität ist implementiert. Inklusive Entity Framework Migration. Ausserdem sind Security, Logging, Telemetrie, Infrastructure-As-Code mit Terraform und Testing im Template enthalten. Das Template hat den Initialen Aufwand für das Projekt Setup auf einen Tag reduziert.
 
-\subsection{Vorgehen und Methodik}
-Vorgehen und Methodik beschreiben
+            Mit Aspire .Net stellt ein Microsoft einen neue Technolgie Stack vor, welcher auf die Entwicklung von Cloud-Native Applikationen ausgerichtet ist. Die Frage stellt sich innerhalb von Isolutions, ab Aspire .Net in das Kickstarter Template integriert werden soll. Kann Aspire .Net das Template schlanker machen? Kann es insbesondere den IaC Teil des Templates ersetzen oder vereinfachen?
 
-\subsection{Zeitplan}
-Hier einen Zeitplan einfügen
+    \subsection{Ziele der Arbeit}
+        Know How bezüglich Aspire .Net ist Isolutions weit nicht bekannt. Es gibt auch in der Community noch wenig Erfahrung mit dem Technologie Stack. Deshalb ist das Erreichen der Ziele ungewiss. Eine Anpassung der Zielsetzung kann während der Arbeit notwendig werden.
+        Folgende Ziele sind vorgängig für diese Arbeit definiert worden:
+
+        \subsubsection{Ziel 1: Analyse von Aspire .Net}
+            Mit der Analyse von Aspire .Net soll herausgefunden werden, ob und welche Teile des Kickstarter Templates durch Aspire .Net verbessert werden kann. Die Analyse erfolgt in folgenden Schritten:
+            \begin{itemize}
+                \item Knowhow aufbau mit Aspire .Net Dokumentation und Tutorials
+                \item 1:1 Integration von Aspire .Net in das Kickstarter Template
+            \end{itemize}
+            Mit der 1:1 Integration soll das Verständnis rund um die Funktionsweise von Aspire .Net und der Entwicklungsphilosophie vertieft werden.
+
+        \subsubsection{Ziel 2: Aufbau eines neuen Templates mit Aspire .Net}
+            Basierend auf den Erkenntnissen aus der Analyse soll ein neues Template aufgebaut werden. Dieses Template soll die gleichen Funktionalitäten wie das Kickstarter Template enthalten, legt jedoch den Fokus auf Azure Cloud Services. Das neue Template soll folgende Funktionalitäten enthalten:
+            \begin{itemize}
+                \item Infrastructure wird durch Aspire .Net provisioniert
+                \item Deployment der Aspire .Net Applikation via automatisierter Pipeling
+                \item Lokale Entwicklung funktioniert offline mit allen referenzierten Services
+                \item Weitere Azure Services können einfach zum Projekt hinzugefügt werden
+            \end{itemize}
+            Das neue Template soll den Fokus insbesondere auf die Auslagerung von Workloads in dafür vorgesehene Azure Services legen.
+
+    \subsection{Vorgehen und Methodik}
+        Da es unklar ist ob die Ziele erreicht werden können, primär wegen fehlendem Know How, wird die Arbeit iterativ durchgeführt. Geplant sind 3 Iterationen:
+        \begin{itemize}
+            \item Iteration 1: Know-How Aufbau
+            \item Iteration 2: Umbau des Kickstarter Templates
+            \item Iteration 3: Aufbau eines Aspire .Net Kickstarter Template
+        \end{itemize}

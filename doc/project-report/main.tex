@@ -77,23 +77,13 @@
 \addbibresource{Verzeichnisse/literatur.bib}
 \usepackage{csquotes} % für Zitate
 
-% Paket für Glossar
-\usepackage[toc, acronym, nonumberlist ]{glossaries}
-\makenoidxglossaries
-
-\loadglsentries[acronym]{Verzeichnisse/abkuerzungen}
-\loadglsentries{Verzeichnisse/glossar}
-
-
 %% Für Codeblöcke mit Syntax-Highlighting
 %% http://www.ctan.org/tex-archive/macros/latex/contrib/minted/
 %% Einkommentieren fuer Minted Syntax Highlighting
-%\usepackage{minted}
-%\definecolor{bg}{rgb}{0.95,0.95,0.95}
+\usepackage{minted}
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
 \input{parameter}
 
-%\input{Einstellungen/arduinoLanguage}
-%\input{Einstellungen/highlighting}
 \usepackage[
 pdftitle={\docTitle},
 pdfsubject={\pdfDescription},
@@ -112,8 +102,6 @@ urlcolor = black,
 citecolor = black] {hyperref}
 
 \input{Einstellungen/einstellungen}
-\input{Verzeichnisse/abkuerzungen}
-\input{Verzeichnisse/urls}
 %--------------------------------------------------------------------------------------------------------------------------------
 %                                       Dokument begin
 %--------------------------------------------------------------------------------------------------------------------------------
@@ -199,12 +187,7 @@ citecolor = black] {hyperref}
     % \printbibliography[title=Literaturverzeichnis]
     %\printbibliography[keyword=Bilder, heading=subbibliography, title={Bildernachweis}]
     %\printbibliography[keyword=Teile, heading=subbibliography, title={Nachweis Teileliste}]
-    
-    % Glossar
-    \printnoidxglossary[type=\acronymtype,title=Abkürzungen,nonumberlist]
-
-    \printnoidxglossary[title=Glossar,nonumberlist]
 
     % Anhang, bei Nichtbedarf auskommentieren
-    \include{Verzeichnisse/anhang}
+     \include{Verzeichnisse/anhang}
 \end{document}

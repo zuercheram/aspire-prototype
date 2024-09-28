@@ -1,15 +1,35 @@
 \section{Implementierung Aspire .NET Kickstartertemplate}
-\subsection{Iteration 1: Know-How Aufbau}
+    In dieser Sektion werden die Arbeiten und Ergebnisse in den Iterationen beschreiben.
 
-\subsection{Iteration 1: Erkenntisse}
+    \subsection{Iteration 1: Know-How Aufbau}
+        Das gewonnene Know-How über Aspire .Net ist im Analyse Abschnitt dieses Berichtes beschrieben. In diesem Abschnitt wird für die arbeit bessonders notwendiges Know-How dokumentiert.
 
-\subsection{Iteration 2: Umbau des Kickstarter Templates}
+        Ein Aspire .Net Projekt besteht, wie bereits beschreiben, aus mindestens drei Projekten. Dem AppHost, ServiceDefaults und einem Service mit individueller Applikationslogik. AppHost und ServiceDefaults sollen hier genauer beschreiben werden.
 
-\subsection{Iteration 2: Erkenntnisse}
+        \subsubsection{AppHost}
+            Das AppHost Projekt ist das Haupt- und Startprojekt einer Aspire .Net Solution. Es enthält die Servicekomposition und ist verantwortlich für deren Orchestrierung.
+            \begin{minted}{python3}
+            var postgres = builder.AddPostgres("postgres").PublishAsAzurePostgresFlexibleServer();
+            var postgresdb = postgres.AddDatabase("postgresdb");
 
-\subsection{Iteration 3: Aufbau eines neuen Protoypes}
+            var api = builder.AddProject<MinimalApi>("messagesapi")
+                .WithReference(postgresdb)
+                .WithExternalHttpEndpoints();
+            \end{minted}
+            Im Beispiel
 
-\subsection{Iteration 3: Erkenntnisse}
+    \subsubsection{AppHost}
+
+
+    \subsection{Iteration 1: Erkenntisse}
+
+    \subsection{Iteration 2: Umbau des Kickstarter Templates}
+
+    \subsection{Iteration 2: Erkenntnisse}
+
+    \subsection{Iteration 3: Aufbau eines neuen Protoypes}
+
+    \subsection{Iteration 3: Erkenntnisse}
 
 
 
