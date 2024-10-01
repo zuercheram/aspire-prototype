@@ -4,25 +4,15 @@
         Aspire .Net ist ein Technologie Stack und deckt deshalb verschiedene Bereiche ab. Hier soll eine Übersicht über die verschiedenen Bereiche gegeben werden, ohne den Anspruch, dass die Übersicht vollständig ist.
 
         \subsubsection{Orchestration}
-            Dieser Bereich fokusiert primär die lokale Entwickler Experience. Aspire .Net Vereinfacht die Verwaltung von Services und deren Verbindung untereinander. Erreicht wird dies durch eine Abstraktion der Service Konfiguration, Umgebungsvariablen und Container Konfiguration. Der Entwickler muss sich nicht um die Konfiguration eines Connection Strings zu einer Datenbank kümmern. Aspire .Net übernimmt diese Aufgabe. Die Orchestrierung beinhaltet die Komposition von individuellen Backend Serivces, Frontends, Datenbanken, Caching und Azure native Serivce wie Azure Service Bus, usw.
+            Dieser Bereich fokussiert primär die lokale Entwickler Erfahrung. Aspire .Net Vereinfacht die Verwaltung von Services und deren Verbindung untereinander. Erreicht wird dies durch eine Abstraktion der Service Konfiguration, Umgebungsvariablen und Container Konfiguration. Der Entwickler muss sich nicht um die Konfiguration eines Connection Strings zu einer Datenbank kümmern. Aspire .Net übernimmt diese Aufgabe. Die Orchestrierung beinhaltet die Komposition von individuellen Backend Serivces, Frontends, Datenbanken, Caching und Azure native Serivce wie Azure Service Bus, usw.
 
         \subsubsection{Integration}
-            Die Integration von Services löst Aspire .Net in dem es die Services in Nuget Packete kapselt. Jedes dieser Packete ist dafür ausgelegt mit der Aspire .Net Orchestrierung zusammen zu arbeiten. Jede Service Integration besteht aus zwei Nuget Packeten. Ein Packet hostet den Service wärend das andere Packet die konsumierende Seite darstellt. Dieser Client stellt die Verbindung zum Host her und registriert Clientservices im Dependency Injection Container vom konsumierenden Service.
+            Die Integration von Services löst Aspire .Net in dem es die Services in Nuget Packete kapselt. Jedes dieser Packete ist dafür ausgelegt mit der Aspire .Net Orchestrierung zusammen zu arbeiten. Jede Service-Integration besteht aus zwei Nuget Paketen. Ein Paket hostet den Service während das andere Paket die konsumierende Seite darstellt. Dieser Client stellt die Verbindung zum Host her und registriert Client-Services im Dependency-Injection Container vom konsumierenden Service.
 
         \subsubsection{Templates und Tooling}
-            Aspire .Net ist um ein standartisiertes Design aufgebaut. Dieses besteht aus:
+            Aspire .Net ist um ein standardisiertes Design aufgebaut. Dieses besteht aus:
             \begin{itemize}
                 \item AppHost: Dies ist ein Projekt, welches die Orchestrierung der Services übernimmt.
-                \item ServiceDefaults: Dieses Projekt enthält die Standartkonfigurationen für Aspire .Net Projekte und kann um individuelle Konfigurationen erweitert werden. Die Konfiguration dreht sich unter anderem um Health Checks, Telemetrie und weiters.
-                \item .Net Projekte: Weitere Projekte enthalten indivudelle .Net Projekte wie Backend Services oder Frontendcode.
+                \item ServiceDefaults: Dieses Projekt enthält die Standardkonfigurationen für Aspire .Net Projekte und kann um individuelle Konfigurationen erweitert werden. Die Konfiguration dreht sich unter anderem um Healthchecks, Telemetrie und weiteres.
+                \item Individuelle .Net Projekte: enthalten Code für Backend Services oder Frontend.
             \end{itemize}
-
-
-    \subsection{Wie wird Aspire .NET verwendet}
-        Beschreiben von Use-Cases von Aspire .Net
-
-        \begin{itemize}
-            \item Code Beispiele
-            \item Verschiedene Services
-            \item Telemetrie
-        \end{itemize}

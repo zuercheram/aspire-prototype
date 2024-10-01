@@ -18,7 +18,7 @@
 % Inhaltsverzeichnis (ohne Nummerierung) -> Abbildungsverzeichnis (Nummerierung in Römisch, beginnend mit "III")-> Tabellenverzeichnis -> Abk.-Verzeichniss
 % Textteil, Nummerierung in arabisch, beginnen mit "1"
 % Anhang -> Literaturverzeichnis, Nummerierung in Römisch, folgend auf Römische Nummerierung von Verzeichnissen
-\documentclass[listof=totoc, bibliography=totoc, a4paper, 12pt, numbers=noenddot]{scrartcl}
+\documentclass[listof=totoc, bibliography=totoc, a4paper, 11pt, numbers=noenddot]{scrartcl}
 \usepackage[ngerman]{babel} % Sprachpaket
 \usepackage{newtxtext,newtxmath} % Konsistente Text- und Mathematikschrift
 \usepackage[onehalfspacing]{setspace} % Zeilenabstand
@@ -44,6 +44,7 @@
 
 % Pakete für Grafiken und Beschriftungen
 \usepackage{graphicx}
+\graphicspath{{./Ressources/Bilder/}}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{tikz}
@@ -80,8 +81,34 @@
 %% Für Codeblöcke mit Syntax-Highlighting
 %% http://www.ctan.org/tex-archive/macros/latex/contrib/minted/
 %% Einkommentieren fuer Minted Syntax Highlighting
-\usepackage[outputdir=../../]{minted}
-\definecolor{bg}{rgb}{0.95,0.95,0.95}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
 
 \input{parameter}
 
@@ -112,7 +139,7 @@ citecolor = black] {hyperref}
     %                                       Deckblatt
     %--------------------------------------------------------------------------------------------------------------------------------
     \include{Text/01_deckblatt}
-    \newgeometry{left=45mm, right=20mm, top=30mm, bottom=30mm}
+    \newgeometry{left=30mm, right=20mm, top=30mm, bottom=30mm}
 
     %---------------------------------------------------------------------------------------------------------------------------------
     %                                       Abstract
@@ -136,13 +163,12 @@ citecolor = black] {hyperref}
 
         % ab hier Nummerierung oben in Römisch, beginnend mit 3
         \pagenumbering{Roman}
-        \setcounter{page}{3}
+        \setcounter{page}{1}
         % Abbildungsverzeichnis,
         \listoffigures
         \newpage
 
-        % Tabellenverzeichnis
-        \listoftables
+        \lstlistoflistings
         \newpage
 
         % Formelverzeichnis
@@ -167,10 +193,7 @@ citecolor = black] {hyperref}
         \include{Text/04_recherche}
 
         % Implementierung
-        \include{Text/05_implementierung}
-
-        % ergebnis
-        \include{Text/06_ergebnis}
+        \include{Text/05_implementierung}        
 
         % Fazit
         \include{Text/07_fazit}
@@ -188,7 +211,4 @@ citecolor = black] {hyperref}
     % \printbibliography[title=Literaturverzeichnis]
     %\printbibliography[keyword=Bilder, heading=subbibliography, title={Bildernachweis}]
     %\printbibliography[keyword=Teile, heading=subbibliography, title={Nachweis Teileliste}]
-
-    % Anhang, bei Nichtbedarf auskommentieren
-     \include{Verzeichnisse/anhang}
 \end{document}
