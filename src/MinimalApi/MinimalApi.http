@@ -1,6 +1,0 @@
-@MinimalApi_HostAddress = https://localhost:7167
-
-GET {{MinimalApi_HostAddress}}/receivedmessages/
-Accept: application/json
-
-###
