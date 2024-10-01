@@ -1,0 +1,13 @@
+{
+  "UI": {
+    "loading": "Daten werden geladen...",
+    "search": "suchen"
+  },
+  "home": {
+    "greeting": "Hallo!",
+    "test": "test"
+  },
+  "typeAhead": {
+    "noOptions": "Keine Optionen"
+  }
+}
