@@ -7,23 +7,255 @@
         Ein Aspire .Net Projekt besteht, wie bereits beschreiben, aus mindestens drei Projekten. Dem AppHost, ServiceDefaults und einem Service mit individueller Applikationslogik. AppHost und ServiceDefaults sollen hier genauer beschreiben werden.
 
         \subsubsection{AppHost}
+            
             Das AppHost Projekt ist das Haupt- und Startprojekt einer Aspire .Net Solution. Es enthält die Servicekomposition und ist verantwortlich für deren Orchestrierung.
-            \begin{minted}{python3}
-            var postgres = builder.AddPostgres("postgres").PublishAsAzurePostgresFlexibleServer();
+
+            \textbf{Service Komposition}
+            
+            \begin{minted}
+            [
+                breaklines,
+                frame=lines,
+                framesep=2mm,
+                baselinestretch=1.2,
+                bgcolor=bg,
+                fontsize=\footnotesize,
+                linenos
+            ]{csharp}
+            var postgres = builder.AddPostgres("postgres")
+                .PublishAsAzurePostgresFlexibleServer();
             var postgresdb = postgres.AddDatabase("postgresdb");
 
             var api = builder.AddProject<MinimalApi>("messagesapi")
                 .WithReference(postgresdb)
                 .WithExternalHttpEndpoints();
             \end{minted}
-            Im Beispiel
+            Das Beispiel zeigt eine einfache Komposition einer PostgresSQL Datenbank in einem Datenbank Server und ein individuelles Projekt mit einer ASP.NET Minimal API. Diese Komposition wird im \verb|Program.cs| Code definiert und beim starten der Applikation ausgeführt.
 
-    \subsubsection{AppHost}
+            \textbf{Service Emulation}
+            
+            Damit \verb|.AddPostgres()| aufgerufen werden kann, muss im AppHost Projekt das entsprechende Nuget Packet installiert sein. In diesem Fall: 
+            \mint{csharp}|Aspire.Npgsql.EntityFrameworkCore.PostgreSQL|
+            Zeile 1 bis 3 teilen Aspire .Net mit, dass eine PostgresSQL Datenbank verwendet werden soll. In Azure wird dazu ein Azure Postgre Flexible Server verwendet, um die Datenbank zu hosten. Lokal führen diese Zeilen Code dazu, dass ein Docker Container mit einer PostgreSQL Datenbank gestartet wird. Wie die Postgre Datenbank in Azure provisioniert oder lokal in Docker gestartet wird, ist im Nuget Packet definiert. Mit diesem Ansatz kann eine Aspire .Net Applikation einfach um Services erweitert werden, wobei der Footprint von Aspire .Net nicht unnötig gross wird.
 
+            \textbf{Service Discovery}
+            
+            Auf Zeile 6 wird mit der Methode \verb|.WithReference(postgresdb)| Aspire .Net mitgeteilt, dass der Service mit dem Minimal Api Projekt eine Verbindung zur PostgreSQL Datenbank hat. Das führt dazu, dass Aspire .Net den Connection String zu der PostgreSQL Datenbank allen konsumierenden Services in der Konfiguration mit gibt. Ports, Credentials und Host wird durch Aspire .Net aufgelöst. Aspire .Net agiert hier grundsätzlich selbständig. Bei Bedarf können Konfigurationen auch manuell gesetzt werden.
+            
+        \subsubsection{Service Defaults}
+            
+            Aspire .Net verwendet für die Überwachung der Services und Darstellung von Telemetry Daten die Standart Endpoints von ASP.NET. Diese Schnittstellen sind per default deaktiviert. Das Service Defaults Projekt hat den Zweck eine standardisierte Variante für die Aktivierung der Health und Telemetry Endpoints. Im Service Defaults Projekt ist die Konfiguration abgelegt und wird mit einer Extension Methode für weitere Services zugänglich gemacht.
+
+            \textbf{Health und Alive Endpoint}
+            
+            \begin{minted}
+            [
+                breaklines,
+                frame=lines,
+                framesep=2mm,
+                baselinestretch=1.2,
+                bgcolor=bg,
+                fontsize=\footnotesize,
+                linenos
+            ]{csharp}
+            public static WebApplication MapDefaultEndpoints(this WebApplication app)
+            {
+                // Adding health checks endpoints to applications in non-development environments has security implications.
+                // See https://aka.ms/dotnet/aspire/healthchecks for details before enabling these endpoints in non-development environments.
+                if (app.Environment.IsDevelopment())
+                {
+                    // All health checks must pass for app to be considered ready to accept traffic after starting
+                    app.MapHealthChecks("/health");
+            
+                    // Only health checks tagged with the "live" tag must pass for app to be considered alive
+                    app.MapHealthChecks("/alive", new HealthCheckOptions
+                    {
+                        Predicate = r => r.Tags.Contains("live")
+                    });
+                }
+                return app;
+            }
+            \end{minted}
+            Mit dieser Methode wird jeweils ein Endpoint für den Alive und den Health Check aktiviert.
+
+            \textbf{Open Telemetry}
+            
+            \begin{minted}
+            [
+                breaklines,
+                frame=lines,
+                framesep=2mm,
+                baselinestretch=1.2,
+                bgcolor=bg,
+                fontsize=\footnotesize,
+                linenos
+            ]{csharp}
+            private static IHostApplicationBuilder AddOpenTelemetryExporters(this IHostApplicationBuilder builder)
+            {
+                var useOtlpExporter = !string.IsNullOrWhiteSpace(
+                    builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]
+                );
+        
+                if (useOtlpExporter)
+                {
+                    builder.Services.AddOpenTelemetry().UseOtlpExporter();
+                }
+        
+                // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
+                if (!string.IsNullOrEmpty(
+                    builder
+                    .Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
+                ))
+                {
+                   builder.Services.AddOpenTelemetry()
+                      .UseAzureMonitor();
+                }
+        
+                return builder;
+            }
+            \end{minted}
+            Mit dem Code wird der Export von Open Telemetry Daten aktiviert. Der Code bietet zwei Varianten an. der Otlp Exporter wird von Aspire .Net verwendet für die Abfrage von Telemetry Daten der Services. Zusätzlich kann eine Connection zu Azure AppInsights konfiguriert werden. Auf Zeile 13 bis 20 wird die Connection zu AppInsights Azure Monitor konfiguriert. Damit würde ASP.NET Telemetry daten an Azure Monitor exportieren.
+
+            \textbf{Service Default Extension}
+            
+            \begin{minted}
+            [
+                breaklines,
+                frame=lines,
+                framesep=2mm,
+                baselinestretch=1.2,
+                bgcolor=bg,
+                fontsize=\footnotesize,
+                linenos
+            ]{csharp}
+            var builder = WebApplication.CreateBuilder(args);
+            builder.AddServiceDefaults();
+            \end{minted}
+            Im Prinzip ist das Service Defaults Projekt eine einzige Extension Method für den \verb|IHostApplicationBuilder|. Die Extension \mint{csharp}|.AddServiceDefaults()| kann in jedem ASP.NET Projekt im Applikationstartup eingefügt werden. Dadurch wird in dieser Applikation Telemetrie und Health Checks aktiviert. Der Vorteil ist, die Konfiguration ist gekapselt und muss nicht für jeden Service individuell erfolgen. Service Defaults können auch unabhängig von Aspire .Net verwendet werden. Aspire .Net setzt hingegen auf diese Service Defaults für seine interne Telemterie und Health Check Abfragen.
+
+        \subsubsection{Stack Services}
+            Einer der angepriesenen Vorteile ist die Integration von Serivces aus einem Katalog von Technologien. Zur Verfügung stehen Datenbanken wie PostgreSQL oder AzureSQL, Caching Services wie Redis oder Azure Storage und so weiter. Wie schon erwähnt steht jeder Service als Nuget Packet zur Verfügung. Jeweils ein Packet für die Integration in die Aspire .Net Applikation und ein Nuget Packet für die Anwendung im konsumierenden Client. 
+            Diese Services aus dem Aspire Stack unterscheiden sich von der Anwendung her wie sie lokal integriert werden. Services welche nicht Azure spezifisch sind, wie Redis oder PostgreSQL, werden lokal als Docker Container gestartet und in die Applikation integriert. Für Azure eigene Services gibt es entweder Emulatoren, welche auch als Docker Container gestartet und integriert werden oder es gibt keine lokal ausführbare Emulatoren oder Container. In diesem Fall, muss der Service auf Azure bereitgestellt und via Connection String lokal integriert werden. Beispielsweise AppInsights oder Azure ServiceBus sind Services für die es keine lokale Emulatoren gibt.
+            \begin{minted}
+            [
+                breaklines,
+                frame=lines,
+                framesep=2mm,
+                baselinestretch=1.2,
+                bgcolor=bg,
+                fontsize=\footnotesize,
+                linenos
+            ]{csharp}
+            var serviceBus = builder.ExecutionContext.IsPublishMode
+                ? builder.AddAzureServiceBus("messaging")
+                : builder.AddConnectionString("messaging");
+            \end{minted}
+            Im Code Beispiel wird die Integration eines Azure Service Bus im \verb|AppHost| dargestellt. Das Code Snippet definiert, dass wenn Aspire .Net im \verb|Publish Mode| ist, dann soll ein Azure Service Bus aufgesetzt werden. Das ist beim Deployment auf der Aspire .Net App in Azure der Fall. Lokal wird ein Connection String zu einem bereits provisionierten Service auf Azure verwendet. Der Service Bus Dienst für die lokale Entwicklung ist nicht der gleiche, welcher beim Publizieren verwendet wird. Das Deployment in Azure wird einen dedizierten Azure Service Bus Dienst für die Azure Umgebung provisionieren.
+
+        \subsubsection{Individuelle Services}
+            Zur Komposition von Diensten aus dem Katalog von Aspire .Net kann eine beliebige Zahl von individuellen Services integriert werden. Grungdsätzlich kann jedes .Net Projekt in Aspire Integriert werden. Voraussetzung ist .Net8. Ältere Versionen werden nicht unterstützt.
+            \begin{minted}
+            [
+                breaklines,
+                frame=lines,
+                framesep=2mm,
+                baselinestretch=1.2,
+                bgcolor=bg,
+                fontsize=\footnotesize,
+                linenos
+            ]{csharp}
+            builder.AddProject<MinimalApi>("messagesapi")
+                .WithReference(postgresdb)
+                .WithExternalHttpEndpoints();
+            \end{minted}
+            Die Methode \verb|.AddProject<T>()| ist für die Integration von .Net Projekten zuständig. Dies können APIs, Background Services oder Client Services wie WPF, WinForms oder Blazor sein. Nebst der korrekten .Net Version ist eine Voraussetzung, dass das Projekt ausführbar sein muss. Das heisst, keine Klassen Libraries, da dieses kein App Startup haben.
+
+            \textbf{Javascript Integration}
+            
+            Aspire .Net bietet auch die Integration von JavaScript Apps an. Für die lokale Integration setzt Aspire dazu NPM voraus und verwendet dies um die App zu starten. 
+            \begin{minted}
+            [
+                breaklines,
+                frame=lines,
+                framesep=2mm,
+                baselinestretch=1.2,
+                bgcolor=bg,
+                fontsize=\footnotesize,
+                linenos
+            ]{csharp}
+            builder.AddNpmApp("angular", "../Frontend")
+                .WithReference(weatherApi)
+                .WithHttpEndpoint(env: "PORT")
+                .WithExternalHttpEndpoints()
+                .PublishAsDockerFile();
+            \end{minted}
+            Im Code Beispiel wird eine Angular App integriert. Die Methode \verb|.AddNpmApp()| teilt Aspire mit, eine Javascript Applikation zu starten. Der erste Parameter ist ein Key für die Identifizierung des Serivces und ist ein frei definierbarer String. Der zweite Parameter setzt das Workdirectory für NPM. In diesem Verzeichnis wird beim Starten der Applikation der Befehl \verb|npm run start| ausgeführt. Im \verb|package.json| der JavaScript App muss \verb|start| als Skript definiert sein. Meistens wird dieser Befehl beim Initialisieren einer JavaScript App wie Angular oder React gesetzt und führt zu einem Starten der JavaScript App im Developer Modus. In einer Angular App wäre dies \verb|ng serve| welches ausgeführt wird, wenn \verb|npm run start| aufgerufen wird. Der Standart Command kann überschrieben werden \verb|.AddNpmApp("angular", "../Frontend", "build")| (der 3. Parameter). Damit können individuelle Start Befehle definiert und ausgeführt werden.
+
+        \subsubsection{Deployment}
+            Aspire .Net stellt für das Deployment auf Azure ein Command Line Tool zur Verfügung. Die "Azure Developer CLI" erstellt die nötigen IaC Files für das Deployment, Provisioniert die Infrastruktur in Azure und Deployed den Code der indiviudellen Services auf die provisionierte Infrastruktur. Für Infrastruktur as Code verwendet die Azure Developer CLI das Azure eigene IaC Format Biceps. 
+
+            Die Azure Developer CLI kann lokal installiert werden und erlaubt so, dass Deployment auf Azure direkt vom Entwicklerrechner. In der Realität wird das Deployment bevorzugt über eine CI/CD Pipeline abgwickelt. Die Azure Developer CLI kann sowohl in Azure DevOps Pipeline oder GitHub Actions verwendet werden. Somit können Aspire .Net Applikationen mit einer der gängigen Pipelines deployed werden.
 
     \subsection{Iteration 1: Erkenntisse}
+            Aspire .NET bietet ein sehr umfangreiches Set an Tools und Diensten für die Enwticklung von verteilten Systemen. Der grosse Pluspunkt für die Entwicklung stellt hier die Verfügbarkeit von verschiedenen Diensten welche lokal integriert sind und verwendet werden können.
 
-    \subsection{Iteration 2: Umbau des Kickstarter Templates}
+            Die Dokumentation von Aspire .Net enthält zu vielen Use-Cases und Diensten Codebeispiele und Informationen, wie der Service integriert und konfiguriert werden kann. Allerdings gibt es noch keine Architekturtemplates oder Tutorials zu Real-World Anwendungen. Insbesondere die Anwendung von Best-Practices und Security kann aus der Dokumentation nicht hergeleitet werden.
+
+            Anhand der Dokumentation sollten jedoch alle Aspekte des Kickstarter Templates in eine Aspire .Net Lösung integriert werden können. Deshalb soll in der nächsten Iteration Aspire .Net in das Kickstarter Template integriert werden.
+            
+    \subsection{Iteration 2: Integration von Aspire .Net in das Kickstarter Template}
+        \subsubsection{Wesentliche Bausteine des Templates}
+
+            Um einen Überblick zu erhalten, wird hier zuerst der Aufbau des Kickstarter Templates dargestellt.
+
+            \textbf{Backend API}
+
+            Der zentrale Baustein ist das Backend. Es enthält die Applikationslogik, API und hosted im produktiven Betrieb das Frontend.
+
+            \textbf{Frontend}
+
+            Das UI ist entweder eine .Net Blazor WebAssembly App oder eine React Typescript App. 
+
+            \textbf{Persistenz}
+            
+            Gespeichert werden die Daten in eine SQL Datenbank. Verbindung zur Datenbank wird durch EntityFrameworkCore erledigt und vom Prinzip her wird Code-First mit EntityFramework Migrations. Damit werden DML Updates an der Datenbank bei jedem Deployment automatisch angewendet.
+
+            \textbf{Azure Entra ID}
+            
+            Entra ID wird für die Authentifizierung in der Applikation verwendet. Libraries für die Verwendung von Entra ID als Identity Provider ist im Template schon vorgesehen und muss nur noch konfiguriert werden.
+
+            \textbf{Azure Key Vault}
+
+            Der Key Vault wird verwendet für die sichere Ablage von Secrets und Zertifikaten. Der Vault selber und auch die Keys werden in den IaC Files definiert.
+
+            \textbf{Infrastruktur as Code}
+
+            Infarstruktur wird komplet via Terraform aufgebaut. Im Template sind alle IaC Files bereits vorhanden, um die Applikation auf Azure zu deployen. Das Template ist für Azure DevOps ausgelegt. Yaml Files für die Pipelines sind schon aufgebaut.
+
+        \subsubsection{Wichtige Aspekte für die Integration von Aspire .Net}
+
+            In einem ersten Schritt für die Integration von Aspire .Net in das Kickstarter Template wurde analysiert, welche Teile des Kickstarter Templates betroffen sind. In diesem Abschnitts werden diese Teile aufgeführt. Für die Integration wird das React Template verwendet, da es bei den Entwicklern populärer ist. 
+
+            \begin{itemize}
+                \item Bei der Integration des Frontends. Selfhosted Service (Aspire .Net) oder Backend-For-Frontend (Kickstarter Template).
+                \item Authentifizierung mit Entry ID. Aspire .Net bietet einen Service mit Keycloak, aber keinen für eine Integration von Entry ID.
+                \item EntityFramework Migrationen. Im Kickstarter Template gibt es für die Migrationen ein eigenes ausführbares .Net Projekt.
+                \item Das Kickstarter Template ist für Logging mit Serilog ausgelegt.
+                \item IaC wird im Kickstarter Template mit Terraform ausgeführt. Apire .Net verwendet Biceps.
+                \item Lokal verwendet das Template Visual Studio User Secrets für ClientIDs und ConnectionString.
+                \item Das Kickstarter Template verwendet für das React Frontend Yarn als Package Manager.
+            \end{itemize}
+
+            Wie sich diese Aspekte auf die Integration von Aspire .Net auswirken oder welche Anpassungen notwendig sind ist noch unklar.
+
+        \subsubsection{Erste Schritte zur Integration von Aspire .Net in das Template}
+
+            Für die Integration kommen zwei Herangehensweisen in Frage. Entweder wird eine blanke Aspire App erstellt und der Template Code hineinkopiert oder Aspire .Net wird in die bestehende Lösung integriert. Für diese Arbeit wurde der zweite Ansatz gewählt. Aspire bietet in der Dokumentation Tutorials für diesen Ansatz.
+
+            Als erstes werden die für Aspire notwendigen Projekte angelegt. Der sogenannte AppHost enthält die Aspire .Net Nuget Host Packages und dient als Startpunkt für die Applikation. Die gesamte Komposition der Services wird in diesem Projekt konfiguriert. Das AppHost Projekt wird einfach in die bestehende Struktur des Templates integeriert.
+            
+            
+            
 
     \subsection{Iteration 2: Erkenntnisse}
 
