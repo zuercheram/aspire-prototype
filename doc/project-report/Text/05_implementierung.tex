@@ -419,10 +419,89 @@ var secrets = builder.ExecutionContext.IsPublishMode
         Damit im Rahmen der Arbeit trotzdem ein vorzeigbares Ergebnis vorliegt und Aspire .Net vorgeführt werden kann, wird ein Prototyp mit einem kleinen Use-Case aufgebaut.
         
         \subsubsection{Anforderungen an den Prototyp}
-        Im Prototyp soll die Funktionsweise von Aspire vorgestellt werden. Es soll eine Komposition gezeigt werden mit verschieden Services, Backend, Frontend ein oder zwei Azure Services. Damit soll die lokale Entwicklung und ein Deployment in Azure demonstriert werden.
+            Im Prototyp soll die Funktionsweise von Aspire vorgestellt werden. Es soll eine Komposition gezeigt werden mit verschieden Services, Backend, Frontend ein oder zwei Azure Services. Damit soll die lokale Entwicklung und ein Deployment in Azure demonstriert werden.
 
-        \subsubsection{Arhcitektur des Prototyps}
-        
+        \subsubsection{Architektur des Prototyps}
+            \includegraphics[scale=0.55]{Ressources/Bilder/Architektur.Prototyp.drawio.png}
+
+            \textbf{Frontend}
+
+            Das Frontend ist ein einfaches Angular Frontend, welches eine Tabelle mit Daten aus dem Backend darstellt.
+
+            \textbf{Backend}
+
+            Das Backend ist eine .Net Minimal Api und bietet einen Endpoint für das Frontend, um die Daten aus der Datenbank für das Frontend bereit zu stellen. 
+
+            \textbf{Datenbank}
+
+            Die Datenbank ist ein PostgreSQL und wird mit Entity Framework Core für PostgreSQL im Backend und im Message Receiver angebunden.
+
+            \textbf{Migrations}
+
+            Dies ist ein Background Service mit den Entity Framework Migrationen. Dieser Service versucht die Migration auf die Datenbank anzuwenden, wenn er gestartet wird.
+
+            \textbf{Message Sender}
+            
+            Der Message Sender ist ein Background Service welcher in einem eingestellten Zeitinterval eine Message an den Azure Serivce Bus sendet.
+
+            \textbf{Azure Service Bus}
+            
+            Der Azure Service Bus ist ein klassischer Service für das Message queuing.
+
+            \textbf{Message Receiver}
+
+            Der Message Receiver ist auch ein Background Service, welcher die Messages aus dem Azure Serice Bus entgegen nimmt und in die Datenbank speichert.
+
+        \subsubsection{Aufbau des Prototypen}
+
+            In diesem Abschnitt sind die interessantesten Aspekte des Prototyps beschrieben. Der gesamte Code ist in GitHub und kann dort besichtigt werden.
+            \mint{csharp}|https://github.com/zuercheram/aspire-prototype/tree/master|
+
+            \begin{minted}
+            [
+                breaklines,
+                frame=lines,
+                framesep=2mm,
+                baselinestretch=1.2,
+                bgcolor=bg,
+                fontsize=\footnotesize,
+                linenos
+            ]{csharp}
+var builder = DistributedApplication.CreateBuilder(args);
+
+var postgres = builder.AddPostgres("postgres").PublishAsAzurePostgresFlexibleServer();
+var postgresdb = postgres.AddDatabase("postgresdb");
+
+var serviceBus = builder.ExecutionContext.IsPublishMode
+    ? builder.AddAzureServiceBus("messaging")
+    : builder.AddConnectionString("messaging");
+
+builder.AddProject<MessageWorker>("messageworker")
+    .WithReference(serviceBus);
+
+var weatherApi = builder.AddProject<MinimalApi>("messagesapi")
+    .WithReference(postgresdb)
+    .WithExternalHttpEndpoints();
+
+builder.AddNpmApp("angular", "../Frontend")
+    .WithReference(weatherApi)
+    .WithHttpEndpoint(env: "PORT")
+    .WithExternalHttpEndpoints()
+    .PublishAsDockerFile();
+
+builder.AddProject<MessageReceiver>("messagereceiver")
+    .WithReference(postgresdb)
+    .WithReference(serviceBus);
+
+builder.AddProject<Data_Model_Migrations>("data-model-migrations")
+    .WithReference(postgresdb);
+
+builder.Build().Run();
+            \end{minted}
+
+            Der Code Abschnitt ist die gesamte Komposition für die Aspire App. Alle indiviudellen Services, das Frontend, Azure Service Bus und die EF Migration wird in diesem Code definiert. Mit \verb|.WithReference()| werden die Services miteinander "Verknüpft". Dies ist für die Service Discovery von Aspire wichtig.
+
+            
 
     \subsection{Iteration 3: Erkenntnisse}
 
